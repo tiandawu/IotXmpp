@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/transparent"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_black_darker"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="主机和端口设置"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/textSize_4"/>
+
+        <LinearLayout
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主机:"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/textSize_4"/>
+
+            <EditText
+                android:id="@+id/et_input_ip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ip"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/textSize_3"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="端口:"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/textSize_4"/>
+
+            <EditText
+                android:id="@+id/et_input_port"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="port"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/text_color"
+                android:textSize="@dimen/textSize_3"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_ok_button"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_button_slector"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="确定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_5"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

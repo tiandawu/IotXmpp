@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chat_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_black_darker">
+
+
+    <include
+        android:id="@+id/base_header"
+        layout="@layout/layout_titlebar" />
+
+    <com.cqupt.xmpp.widght.DropdownListView
+        android:id="@+id/message_chat_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom"
+        android:layout_below="@id/base_header"
+        android:background="@color/bg_black_darker"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@null"
+        android:listSelector="@color/transparent"
+        android:transcriptMode="normal" />
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimaryDark" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/bg_black_darker">
+
+            <TextView
+                android:id="@+id/subscribe_node"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/press_selector"
+                android:gravity="center"
+                android:text="订阅节点"
+                android:textColor="@color/gray_600"
+                android:textSize="@dimen/textSize_4" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimaryDark" />
+
+
+            <TextView
+                android:id="@+id/read_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/press_selector"
+                android:gravity="center"
+                android:text="读取数据"
+                android:textColor="@color/gray_600"
+                android:textSize="@dimen/textSize_4" />
+
+            <View
+                android:layout_width="1px"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorPrimaryDark" />
+
+
+            <TextView
+                android:id="@+id/setting_node"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/press_selector"
+                android:gravity="center"
+                android:text="设置节点"
+                android:textColor="@color/gray_600"
+                android:textSize="@dimen/textSize_4" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

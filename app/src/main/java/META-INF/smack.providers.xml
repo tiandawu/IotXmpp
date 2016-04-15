@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<smackProviders>
+    <iqProvider>
+        <elementName>resp</elementName>
+        <namespace>android:xmpp</namespace>
+        <className>com.cqupt.xmpp.provider.GetDataRespProvider</className>
+    </iqProvider>
+</smackProviders>

@@ -1,0 +1,10 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="titlebar_height">46.0dip</dimen>
+    <dimen name="title_size">20sp</dimen>
+    <dimen name="text_size_1">10sp</dimen>
+    <dimen name="textSize_2">12sp</dimen>
+    <dimen name="textSize_3">14sp</dimen>
+    <dimen name="textSize_4">16sp</dimen>
+    <dimen name="textSize_5">18sp</dimen>
+</resources>

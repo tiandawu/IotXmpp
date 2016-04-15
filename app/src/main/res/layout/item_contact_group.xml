@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/group_item_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="50.0dip"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/group_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/contact_indicator_slector" />
+
+
+    <TextView
+        android:id="@+id/online_count"
+        android:layout_width="50dip"
+        android:layout_height="50.0dip"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/gray_600"
+        android:textSize="@dimen/textSize_2"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="50.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="44.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_toLeftOf="@id/online_count"
+        android:ellipsize="end"
+        android:gravity="left|center"
+        android:includeFontPadding="false"
+        android:maxEms="11"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/gray_600"
+        android:textSize="@dimen/textSize_4"
+        android:textStyle="bold" />
+
+</RelativeLayout>

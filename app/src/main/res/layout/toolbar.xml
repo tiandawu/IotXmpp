@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:minHeight="?attr/actionBarSize"
+    android:orientation="horizontal"
+    app:popupTheme="@style/Theme.AppCompat.Light"
+    app:theme="@style/MyMaterialTheme">
+
+    <com.cqupt.xmpp.widght.CircleImageView
+        android:id="@+id/toobar_user_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/login_image"
+        app:civ_border_color="@color/text_color"
+        app:civ_border_width="1dp" />
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="Title"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/title_size" />
+
+    <ImageView
+        android:background="@color/colorPrimary"
+        android:id="@+id/toolbar_add_btn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/add_friend" />
+
+</LinearLayout>
