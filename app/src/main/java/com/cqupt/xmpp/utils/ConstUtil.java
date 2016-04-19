@@ -1,5 +1,7 @@
 package com.cqupt.xmpp.utils;
 
+import android.content.Context;
+
 /**
  * Created by tiandawu on 2016/3/31.
  */
@@ -38,5 +40,14 @@ public class ConstUtil {
      * 在线
      */
     public static final String OFF_LINE = "available";
+
+    /**
+     * 获取所有者的jid
+     *
+     * @return
+     */
+    public static String getOwnerJid(Context context) {
+        return PreferencesUtils.getSharePreStr(context, SP_KEY_NAME) + "@xmpp/Smack";
+    }
 
 }

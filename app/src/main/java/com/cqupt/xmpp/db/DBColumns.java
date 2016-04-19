@@ -27,4 +27,14 @@ public class DBColumns {
     public static final String SESSION_OWNER = "session_owner";//会话属于谁
 
 
+    /**
+     * 存储结点订阅状态
+     */
+
+    public static final String NODE_TABLE_NAME = "node_status";//表名
+    public static final String NODE_NAME = "node_name";//节点名
+    public static final String NODE_PERIOD = "node_period";//节点周期订阅的状态
+    public static final String NODE_HIGHLIMIT = "node_highLimit";//节点上限订阅状态
+    public static final String NODE_LOWLIMIT = "node_lowLimit";//节点下限订阅的状态
+
 }

@@ -1,7 +1,5 @@
 package com.cqupt.xmpp.packet;
 
-import android.util.Log;
-
 import org.jivesoftware.smack.packet.IQ;
 
 /**
@@ -9,14 +7,15 @@ import org.jivesoftware.smack.packet.IQ;
  */
 public class SubscribNode extends IQ {
 
-    private String pubName, pubType;
+    private String pubName, pubType, pubTypeNode;
 
     public SubscribNode() {
     }
 
-    public SubscribNode(String pubName, String pubType) {
+    public SubscribNode(String pubName, String pubType, String pubTypeNode) {
         this.pubName = pubName;
         this.pubType = pubType;
+        this.pubTypeNode = pubTypeNode;
     }
 
     @Override
@@ -24,10 +23,11 @@ public class SubscribNode extends IQ {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<req var='sub'><item pub='");
         stringBuilder.append(pubName);
-        stringBuilder.append("' attrName='temprature' type='");
+        stringBuilder.append("' attrName='");
+        stringBuilder.append(pubTypeNode);
+        stringBuilder.append("' type='");
         stringBuilder.append(pubType);
         stringBuilder.append("'/></req>");
-        Log.e("tt", "sbToStr=" + stringBuilder.toString());
         return stringBuilder.toString();
     }
 
@@ -47,4 +47,11 @@ public class SubscribNode extends IQ {
         this.pubType = pubType;
     }
 
+    public String getPubTypeNode() {
+        return pubTypeNode;
+    }
+
+    public void setPubTypeNode(String pubTypeNode) {
+        this.pubTypeNode = pubTypeNode;
+    }
 }

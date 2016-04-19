@@ -1,5 +1,10 @@
 package com.cqupt.xmpp.manager;
 
+import com.cqupt.xmpp.provider.GetDataRespProvider;
+import com.cqupt.xmpp.provider.SubscribRespProvider;
+import com.cqupt.xmpp.provider.UnsubNodeReqProvider;
+import com.cqupt.xmpp.provider.WriteNodeRespProvider;
+
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -150,7 +155,26 @@ public class XmppConnectionManager {
      */
     public void configure(ProviderManager pm) {
 
-//        pm.addIQProvider("resp", "android:xmpp", new GetDataRespProvider());
+        /**
+         * 读取数据解析器
+         */
+        pm.addIQProvider("resp", "get:data", new GetDataRespProvider());
+        /**
+         * 订阅响应解析器
+         */
+        pm.addIQProvider("resp", "resp:subd", new SubscribRespProvider());
+
+        /**
+         * 写入数据的响应解析器
+         */
+        pm.addIQProvider("resp", "write:data", new WriteNodeRespProvider());
+
+        /**
+         * 取消订阅的响应解析器
+         */
+        pm.addIQProvider("req", "req:usubd", new UnsubNodeReqProvider());
+
+
         pm.addIQProvider("query", "jabber:iq:private", new PrivateDataManager.PrivateDataIQProvider());
         // Time
         try {

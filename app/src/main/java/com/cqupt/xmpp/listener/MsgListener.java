@@ -2,13 +2,14 @@ package com.cqupt.xmpp.listener;
 
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.util.Log;
 
 import com.cqupt.xmpp.activity.ChatWithNodeActivity;
 import com.cqupt.xmpp.bean.ChatMessage;
 import com.cqupt.xmpp.bean.ChatSession;
+import com.cqupt.xmpp.bean.NodeSubStatus;
 import com.cqupt.xmpp.db.ChatMsgDao;
 import com.cqupt.xmpp.db.ChatSesionDao;
+import com.cqupt.xmpp.db.NodeStatusDao;
 import com.cqupt.xmpp.fragment.MessageFragment;
 import com.cqupt.xmpp.service.IotXmppService;
 import com.cqupt.xmpp.utils.DateUtils;
@@ -25,23 +26,40 @@ public class MsgListener implements MessageListener {
     private NotificationManager mNotificationManager;
     private ChatMsgDao chatMsgDao;
     private ChatSesionDao mChatSesionDao;
+    private NodeStatusDao mNodeStatusDao;
 
     public MsgListener(IotXmppService context, NotificationManager mNotificationManager) {
         this.context = context;
         this.mNotificationManager = mNotificationManager;
         chatMsgDao = new ChatMsgDao(context);
         mChatSesionDao = new ChatSesionDao(context);
+        mNodeStatusDao = new NodeStatusDao(context);
     }
 
     @Override
     public void processMessage(Chat chat, Message message) {
 
         String xmlStr = message.toXML();
+
+        String from = message.getFrom();
+        String subType = message.getSubType();
+
+        if (!mNodeStatusDao.isExistTheNode(from)) {
+            NodeSubStatus node = new NodeSubStatus();
+            node.setNodeName(from);
+            if (subType.equals("period")) {
+                node.setPeriod(subType);
+            } else if (subType.equals("highLimit")) {
+                node.setHighLimit(subType);
+            } else if (subType.equals("lowLimit")) {
+                node.setLowLimit(subType);
+            }
+            mNodeStatusDao.insert(node);
+        }
+
         if (message.getBody() == null) {
 
             String result = xmlStr.substring(xmlStr.indexOf("<value>") + 7, xmlStr.indexOf("</value>"));
-
-            Log.e("tt", result);
 
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setTo(message.getTo());
@@ -73,4 +91,5 @@ public class MsgListener implements MessageListener {
         }
 
     }
+
 }

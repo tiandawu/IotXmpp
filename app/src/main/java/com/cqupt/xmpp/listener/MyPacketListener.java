@@ -1,93 +1,94 @@
 package com.cqupt.xmpp.listener;
 
-import android.util.Log;
+import android.content.Intent;
 
+import com.cqupt.xmpp.activity.ChatWithNodeActivity;
+import com.cqupt.xmpp.bean.ChatMessage;
+import com.cqupt.xmpp.bean.ChatSession;
+import com.cqupt.xmpp.db.ChatMsgDao;
+import com.cqupt.xmpp.db.ChatSesionDao;
+import com.cqupt.xmpp.db.NodeStatusDao;
+import com.cqupt.xmpp.fragment.MessageFragment;
+import com.cqupt.xmpp.packet.GetDataResp;
+import com.cqupt.xmpp.packet.SubscribResp;
+import com.cqupt.xmpp.packet.UnsubNodeReq;
+import com.cqupt.xmpp.packet.WriteNodeResp;
 import com.cqupt.xmpp.service.IotXmppService;
+import com.cqupt.xmpp.utils.DateUtils;
 
 import org.jivesoftware.smack.PacketListener;
-import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Packet;
-import org.jivesoftware.smack.packet.Presence;
 
 public class MyPacketListener implements PacketListener {
-    IotXmppService context;
+    private IotXmppService context;
+    private ChatMsgDao mChatMsgDao;
+    private ChatSesionDao mChatSesionDao;
+    private NodeStatusDao mNodeStatusDao;
 
     public MyPacketListener(IotXmppService context) {
         this.context = context;
+        mChatMsgDao = new ChatMsgDao(context);
+        mChatSesionDao = new ChatSesionDao(context);
+        mNodeStatusDao = new NodeStatusDao(context);
     }
 
     @Override
     public void processPacket(Packet packet) {
-        Log.e("tt", "收到包！");
-
-//        Log.e("tt", "packet=" + packet.toXML());
 
         if (packet.getFrom().equals(packet.getTo())) {
             return;
         }
 
-        if (packet instanceof IQ) {
-            IQ iq = (IQ) packet;
-            Log.e("tt", "iq=" + iq.toXML());
+        //获取到数据
+        if (packet instanceof GetDataResp) {
+            GetDataResp getDataResp = (GetDataResp) packet;
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setFrom(getDataResp.getFrom());
+            chatMessage.setTo(getDataResp.getTo());
+            chatMessage.setTime(DateUtils.getNowDateTime());
+            chatMessage.setOwner(getDataResp.getTo());
+            chatMessage.setBody(getDataResp.getValue());
+            mChatMsgDao.insert(chatMessage);
+
+            Intent intent = new Intent();
+            intent.setAction(ChatWithNodeActivity.RECEIVED_MESSAGE);
+            context.sendBroadcast(intent);
+
+
+            ChatSession session = new ChatSession();
+            session.setFrom(getDataResp.getFrom());
+            session.setTo(getDataResp.getTo());
+            session.setBody(getDataResp.getValue());
+            session.setOwner(getDataResp.getTo());
+            session.setTime(DateUtils.getNowDateTime());
+            if (mChatSesionDao.isExistTheSession(getDataResp.getFrom(), getDataResp.getTo())) {
+                mChatSesionDao.updateSession(session);
+            } else {
+                mChatSesionDao.insert(session);
+            }
+
+            Intent sessionIntent = new Intent();
+            sessionIntent.setAction(MessageFragment.RECEIVED_NEW_SESSION);
+            context.sendBroadcast(sessionIntent);
+        } else if (packet instanceof SubscribResp) {
+            //订阅成功的响应
+            Intent subIntent = new Intent();
+            subIntent.putExtra("subType", SubscribResp.getPubType());
+            subIntent.setAction(ChatWithNodeActivity.SUBSCRIBE_SUCCESS);
+            context.sendBroadcast(subIntent);
+        } else if (packet instanceof WriteNodeResp) {
+            //写入数据成功的响应
+            Intent writeIntent = new Intent();
+            writeIntent.setAction(ChatWithNodeActivity.WRITE_SUCCESS);
+            context.sendBroadcast(writeIntent);
+        } else if (packet instanceof UnsubNodeReq) {
+            UnsubNodeReq unsubNodeReq = (UnsubNodeReq) packet;
+            Intent unsubIntent = new Intent();
+            unsubIntent.putExtra("unsubType", unsubNodeReq.getPubType());
+            unsubIntent.setAction(ChatWithNodeActivity.UNSUBD_SUCCESS);
+            context.sendBroadcast(unsubIntent);
         }
 
-        if (packet instanceof Presence) {
-            Presence presence = (Presence) packet;
-
-            Log.e("tt", "presence=" + presence.toXML());
-            Log.e("tt", "type=" + presence.getType());
-            String type = presence.getType() + "";
-//            if (type.equals("available")) {
-//                Log.e("tt", "online");
-//
-//                Intent intent = new Intent();
-//                intent.setAction(ContactFragment.FRIENDS_STATUS_CHANGED);
-//                context.sendBroadcast(intent);
-//            }
-
-//            String from = presence.getFrom();// 发送方
-//            String to = presence.getTo();// 接收方
-//            if (presence.getType().equals(Presence.Type.subscribe)) {// 好友申请
-//                Log.e("tt", "好友申请");
-//            } else if (presence.getType().equals(Presence.Type.subscribed)) {// 同意添加好友
-//                Log.e("tt", "同意添加好友");
-//            } else if (presence.getType().equals(Presence.Type.unsubscribe)) {// 拒绝添加好友
-//                // 和
-//                // 删除好友
-//                Log.e("tt", "拒绝添加好友");
-//            } else if (presence.getType().equals(Presence.Type.unsubscribed)) {
-//
-//            } else if (presence.getType().equals(Presence.Type.unavailable)) {// 好友下线
-//                // 要更新好友列表，可以在这收到包后，发广播到指定页面
-//                // 更新列表
-//                Log.e("tt", from);
-//                Log.e("tt", "好友下线");
-//                Intent intent = new Intent();
-//                intent.setAction(ContactFragment.FRIENDS_STATUS_CHANGED);
-//                context.sendBroadcast(intent);
-//            } else if (presence.getType().equals(Presence.Type.available)) {// 好友上线
-//
-//                Presence.Mode mode = presence.getMode();
-//
-//                if (mode.equals(Presence.Mode.chat)) {
-//                    Log.e("tt", "chat");
-//                } else if (mode.equals(Presence.Mode.away)) {
-//                    Log.e("tt", "away");
-//                } else if (mode.equals(Presence.Mode.dnd)) {
-//                    Log.e("tt", "dnd");
-//                } else if (mode.equals(Presence.Mode.xa)) {
-//                    Log.e("tt", "xa");
-//                } else if (mode.equals(Presence.Mode.available)) {
-//                    Log.e("tt", "available");
-//                }
-//                Log.e("tt", "好友上线");
-//                Intent intent = new Intent();
-//                intent.setAction(ContactFragment.FRIENDS_STATUS_CHANGED);
-//                context.sendBroadcast(intent);
-//            } else {
-//                Log.e("tt", "error");
-//            }
-        }
     }
 
 }

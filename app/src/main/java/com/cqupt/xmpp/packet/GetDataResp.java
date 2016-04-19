@@ -30,7 +30,7 @@ public class GetDataResp extends IQ {
     @Override
     public String getChildElementXML() {
         StringBuilder buf = new StringBuilder();
-        buf.append("<resp><attribute var='");
+        buf.append("<resp xmlns='get:data'><attribute var='");
         buf.append(getVar());
         buf.append("'>");
         buf.append(getValue());

@@ -6,6 +6,7 @@ import org.jivesoftware.smack.packet.IQ;
  * Created by tiandawu on 2016/4/10.
  */
 public class GetNodeData extends IQ {
+    //<iq id='123' type='get' from='client@xmpp/B' to='sensor@xmpp/resource'><req var='read'><attr var='temprature'/></req></iq>
 
     private String dataType;
 

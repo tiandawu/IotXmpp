@@ -18,7 +18,6 @@ public class GetDataRespProvider implements IQProvider {
     public IQ parseIQ(XmlPullParser parser) throws Exception {
 
         GetDataResp getDataResp = new GetDataResp();
-//        getDataResp.addExtension(new DefaultPacketExtension(parser.getName(), parser.getNamespace()));
         boolean done = false;
 
         while (!done) {

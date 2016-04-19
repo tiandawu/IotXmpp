@@ -119,7 +119,7 @@ public class ChatSesionDao {
      */
     public int queryTheLastMsgId() {
         SQLiteDatabase db = mDBHelper.getWritableDatabase();
-        String sql = "select _id" + " from " + DBColumns.MSG_TABLE_NAME + " order by _id" + " desc limit 1";
+        String sql = "select _id" + " from " + DBColumns.SESSION_TABLE_NAME + " order by _id" + " desc limit 1";
         String[] args = new String[]{};
         Cursor cursor = db.rawQuery(sql, args);
         int id = -1;

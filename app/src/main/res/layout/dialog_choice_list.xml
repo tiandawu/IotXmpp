@@ -42,7 +42,7 @@
                 android:background="@drawable/btn_trans_select"
                 android:gravity="center"
                 android:text="取消"
-                android:textColor="@color/gray_600"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/textSize_3" />
 
         </LinearLayout>

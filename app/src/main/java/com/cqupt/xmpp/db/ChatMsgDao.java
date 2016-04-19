@@ -44,10 +44,15 @@ public class ChatMsgDao {
     /**
      * 清空所有聊天记录
      */
-    public void deleteTableData() {
+    public boolean deleteTableData() {
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.delete(DBColumns.MSG_TABLE_NAME, null, null);
+        int result = db.delete(DBColumns.MSG_TABLE_NAME, null, null);
         db.close();
+        if (result > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -120,5 +125,18 @@ public class ChatMsgDao {
         cursor.close();
         db.close();
         return id;
+    }
+
+
+    /**
+     * 根据收到消息的时间，删除对应聊天记录
+     *
+     * @return
+     */
+    public long deleteMsgByTime(String time) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        long row = db.delete(DBColumns.MSG_TABLE_NAME, DBColumns.MSG_TIME + " = ?", new String[]{time});
+        db.close();
+        return row;
     }
 }

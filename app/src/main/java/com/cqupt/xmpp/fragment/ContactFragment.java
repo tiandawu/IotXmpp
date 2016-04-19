@@ -15,6 +15,7 @@ import com.cqupt.xmpp.activity.ChatWithNodeActivity;
 import com.cqupt.xmpp.adapter.MyExpandableListViewAdapter;
 import com.cqupt.xmpp.base.BaseFragment;
 import com.cqupt.xmpp.manager.XmppConnectionManager;
+import com.cqupt.xmpp.utils.ToastUtils;
 
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterGroup;
@@ -78,6 +79,12 @@ public class ContactFragment extends BaseFragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 ArrayList<RosterEntry> rosterEntries = new ArrayList<>(mGroups.get(groupPosition).getEntries());
                 String groupName = mGroups.get(groupPosition).getName();
+
+                if (groupName.equals("people")) {
+                    ToastUtils.showShortToastInCenter(getActivity(), "目前不支持与人聊天");
+                    return true;
+                }
+
                 String childName = rosterEntries.get(childPosition).getName();
                 String childJid = rosterEntries.get(childPosition).getUser();
                 Intent intent = new Intent(getActivity(), ChatWithNodeActivity.class);

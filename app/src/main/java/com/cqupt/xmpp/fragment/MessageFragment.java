@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cqupt.xmpp.R;
+import com.cqupt.xmpp.activity.ChatWithNodeActivity;
 import com.cqupt.xmpp.adapter.SessionFragmentAdapter;
 import com.cqupt.xmpp.base.BaseFragment;
 import com.cqupt.xmpp.bean.ChatSession;
@@ -64,7 +65,16 @@ public class MessageFragment extends BaseFragment {
         mAdapter.setOnClickListener(new SessionFragmentAdapter.OnClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                
+                String from = mChatSessions.get(position).getFrom();
+                String childName = from.substring(0, from.lastIndexOf("@"));
+                String groupName = from.substring(from.lastIndexOf("/") + 1);
+                String childJid = childName + "@xmpp";
+
+                Intent intent = new Intent(getActivity(), ChatWithNodeActivity.class);
+                intent.putExtra(ContactFragment.GROUP_NAME, groupName);
+                intent.putExtra(ContactFragment.CHILD_NAME, childName);
+                intent.putExtra(ContactFragment.CHILD_JID, childJid);
+                getActivity().startActivity(intent);
             }
 
             @Override
@@ -72,6 +82,7 @@ public class MessageFragment extends BaseFragment {
 
             }
         });
+
     }
 
 

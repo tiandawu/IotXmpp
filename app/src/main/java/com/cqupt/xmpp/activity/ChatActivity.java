@@ -68,7 +68,6 @@ public class ChatActivity extends SwipeBackActivity implements View.OnClickListe
             finish();
             return;
         }
-        Log.e("tt", "YOU=" + YOU);
         title.setText(YOU.substring(0, YOU.lastIndexOf("@")));
     }
 
