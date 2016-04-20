@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.design.widget.TextInputLayout;
 import android.text.Selection;
@@ -11,11 +12,14 @@ import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.cqupt.xmpp.R;
@@ -26,7 +30,6 @@ import com.cqupt.xmpp.utils.ConstUtil;
 import com.cqupt.xmpp.utils.PreferencesUtils;
 import com.cqupt.xmpp.utils.ToastUtils;
 import com.cqupt.xmpp.widght.CatLoadingView;
-import com.cqupt.xmpp.widght.LoginSettingDialog;
 
 /**
  * Created by tiandawu on 2016/3/31.
@@ -144,8 +147,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ToastUtils.showShortToastInCenter(this, "目前不支持注册新用户");
                 break;
             case R.id.login_setting:
-                LoginSettingDialog dialog = new LoginSettingDialog(this);
-                dialog.show();
+                showLoginSettingPop();
                 break;
             case R.id.show_password:
                 showPassword.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +176,47 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 });
                 break;
         }
+    }
+
+    /**
+     * 登陆设置popWindow
+     */
+    private void showLoginSettingPop() {
+        final PopupWindow pop = new PopupWindow(LoginActivity.this);
+        View view = View.inflate(LoginActivity.this, R.layout.pop_login_settings, null);
+        pop.setContentView(view);
+        pop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        pop.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        pop.setBackgroundDrawable(new ColorDrawable());
+        pop.setFocusable(true);
+        final EditText inputIp = (EditText) view.findViewById(R.id.et_input_ip);
+        final EditText inputPort = (EditText) view.findViewById(R.id.et_inpu_port);
+
+        inputIp.setText(PreferencesUtils.getSharePreStr(LoginActivity.this, ConstUtil.XMPP_IP));
+        inputPort.setText(PreferencesUtils.getSharePreStr(LoginActivity.this, ConstUtil.XMPP_PORT));
+
+        TextView cancle = (TextView) view.findViewById(R.id.tv_cancle);
+        TextView okBtn = (TextView) view.findViewById(R.id.tv_ok);
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop.dismiss();
+            }
+        });
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String ip = inputIp.getText().toString().trim();
+                String port = inputPort.getText().toString().trim();
+                PreferencesUtils.putSharePre(LoginActivity.this, ConstUtil.XMPP_IP, ip);
+                PreferencesUtils.putSharePre(LoginActivity.this, ConstUtil.XMPP_PORT, port);
+                pop.dismiss();
+            }
+        });
+
+        pop.showAtLocation(view, Gravity.CENTER, 0, 0);
+
     }
 
 

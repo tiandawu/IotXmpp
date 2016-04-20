@@ -80,7 +80,7 @@ public class IotXmppService extends Service {
      */
     void initXMPP() {
         String ip = PreferencesUtils.getSharePreStr(this, ConstUtil.XMPP_IP);
-        int port = PreferencesUtils.getSharePreInt(this, ConstUtil.XMPP_PORT);
+        String port = PreferencesUtils.getSharePreStr(this, ConstUtil.XMPP_PORT);
 
         if (ip.equals("")) {
             sendLoginBroadcast(false);
@@ -88,7 +88,7 @@ public class IotXmppService extends Service {
             return;
         }
 
-        mXMPPConnection = mXmppConnectionManager.initConnection(ip, port); // 初始化XMPPConnection
+        mXMPPConnection = mXmppConnectionManager.initConnection(ip, Integer.parseInt(port)); // 初始化XMPPConnection
 
         loginXMPP(); // 登录XMPP
         ChatManager chatmanager = mXMPPConnection.getChatManager();
