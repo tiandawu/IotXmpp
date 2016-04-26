@@ -4,9 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.cqupt.xmpp.bean.NodeSubStatus;
+
+import java.util.ArrayList;
 
 /**
  * Created by tiandawu on 2016/4/18.
@@ -151,4 +152,29 @@ public class NodeStatusDao {
         db.close();
         return id;
     }
+
+    /**
+     * 查询所有被订阅的节点
+     *
+     * @return
+     */
+    public ArrayList<NodeSubStatus> querySubNodes() {
+        ArrayList<NodeSubStatus> list = new ArrayList<>();
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String sql = "select * from " + DBColumns.NODE_TABLE_NAME + ";";
+        Cursor cursor = db.rawQuery(sql, null);
+        NodeSubStatus nodeSubStatus = null;
+        while (cursor.moveToNext()) {
+            nodeSubStatus = new NodeSubStatus();
+            nodeSubStatus.setNodeName(cursor.getString(cursor.getColumnIndex(DBColumns.NODE_NAME)));
+            nodeSubStatus.setHighLimit(cursor.getString(cursor.getColumnIndex(DBColumns.NODE_HIGHLIMIT)));
+            nodeSubStatus.setLowLimit(cursor.getString(cursor.getColumnIndex(DBColumns.NODE_LOWLIMIT)));
+            nodeSubStatus.setPeriod(cursor.getString(cursor.getColumnIndex(DBColumns.NODE_PERIOD)));
+            list.add(0, nodeSubStatus);
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
 }

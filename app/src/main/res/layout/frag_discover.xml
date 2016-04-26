@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center"-->
-    <!--android:text="发现"/>-->
-
-
-    <Button
-        android:id="@+id/insert"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/spread_line_chart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="插入数据" />
+        android:layout_height="400dip"/>
 
-    <Button
-        android:id="@+id/queryOne"
+
+
+    <LinearLayout
+        android:id="@+id/look_more"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查询一条数据" />
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/corner_gray_bg"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/queryList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="查询一页" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看更多"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/textSize_5"/>
+    </LinearLayout>
 </LinearLayout>

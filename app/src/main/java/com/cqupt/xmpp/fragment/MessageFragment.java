@@ -65,6 +65,7 @@ public class MessageFragment extends BaseFragment {
         mAdapter.setOnClickListener(new SessionFragmentAdapter.OnClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+
                 String from = mChatSessions.get(position).getFrom();
                 String childName = from.substring(0, from.lastIndexOf("@"));
                 String groupName = from.substring(from.lastIndexOf("/") + 1);

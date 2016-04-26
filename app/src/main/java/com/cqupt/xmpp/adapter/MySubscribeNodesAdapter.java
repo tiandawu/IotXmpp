@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cqupt.xmpp.R;
-import com.cqupt.xmpp.bean.ChatSession;
+import com.cqupt.xmpp.bean.NodeSubStatus;
 import com.cqupt.xmpp.manager.XmppConnectionManager;
 import com.cqupt.xmpp.widght.CircleImageView;
 
@@ -20,19 +20,19 @@ import java.util.ArrayList;
 import static com.cqupt.xmpp.R.id.session_user_status;
 
 /**
- * Created by tiandawu on 2016/4/13.
+ * Created by tiandawu on 2016/4/20.
  */
-public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragmentAdapter.MyViewHolder> {
-
+public class MySubscribeNodesAdapter extends RecyclerView.Adapter<MySubscribeNodesAdapter.MyViewHolder> {
 
     private Context mContext;
-    private ArrayList<ChatSession> mChatSessions;
-    private OnClickListener mListener;
+    private ArrayList<NodeSubStatus> mList;
     private Roster mRoster;
+    private OnClickListener mListener;
 
-    public SessionFragmentAdapter(Context context, ArrayList<ChatSession> sessions) {
-        this.mChatSessions = sessions;
+
+    public MySubscribeNodesAdapter(Context context, ArrayList<NodeSubStatus> mList) {
         this.mContext = context;
+        this.mList = mList;
         mRoster = XmppConnectionManager.getXmppconnectionManager().getRoster();
     }
 
@@ -42,18 +42,42 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
         return holder;
     }
 
-
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        NodeSubStatus nodeSubStatus = mList.get(position);
+        String nodeName = nodeSubStatus.getNodeName();
+        String name = nodeName.substring(0, nodeName.lastIndexOf("@"));
+        String period = nodeSubStatus.getPeriod();
+        String highLimit = nodeSubStatus.getHighLimit();
+        String lowLimit = nodeSubStatus.getLowLimit();
+        String subSttus = null;
+        if (!period.equals("false")) {
+            subSttus += period;
+        }
 
+        if (!highLimit.equals("false")) {
 
-        String from = mChatSessions.get(position).getFrom();
-        String userName = from.substring(0, from.lastIndexOf("@"));
-        holder.userName.setText(userName);
-        holder.sessionContent.setText("测到的值为：" + mChatSessions.get(position).getBody());
+            if (subSttus != null) {
+                subSttus += "/" + highLimit;
+            } else {
+                subSttus += highLimit;
+            }
 
-        RosterEntry entry = mRoster.getEntry(from.substring(0, from.lastIndexOf("/")));
-        final String type = mRoster.getPresence(entry.getUser()).getType() + "";
+        }
+
+        if (!lowLimit.equals("false")) {
+
+            if (subSttus != null) {
+                subSttus += "/" + lowLimit;
+            } else {
+                subSttus += lowLimit;
+            }
+
+        }
+        RosterEntry entry = mRoster.getEntry(nodeName.substring(0, nodeName.lastIndexOf("/")));
+        String type = mRoster.getPresence(entry.getUser()).getType() + "";
+        holder.userName.setText(name);
+        holder.sessionContent.setText(subSttus);
 
         if (type.equals("available")) {
             holder.userStatus.setText(mContext.getResources().getText(R.string.on_line));
@@ -85,11 +109,10 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
 
     @Override
     public int getItemCount() {
-        return mChatSessions.size();
+        return mList.size();
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder {
-
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView userImage;
         private TextView userName, sessionContent, userStatus;
         private ImageView userStatusImage;
@@ -104,6 +127,7 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
         }
     }
 
+
     public interface OnClickListener {
         void onItemClick(View view, int position);
 
@@ -113,5 +137,4 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
     public void setOnClickListener(OnClickListener listener) {
         this.mListener = listener;
     }
-
 }

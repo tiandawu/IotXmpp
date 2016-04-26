@@ -84,6 +84,33 @@ public class ChatMsgDao {
 
 
     /**
+     * 查询所有消息
+     *
+     * @return
+     */
+    public ArrayList<ChatMessage> queryMsgs(String from, String to) {
+        ArrayList<ChatMessage> list = new ArrayList<>();
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String sql = "select * from " + DBColumns.MSG_TABLE_NAME + " where " + DBColumns.MSG_FROM + "=? and " + DBColumns.MSG_TO + "=?";
+        String[] args = new String[]{from, to};
+        Cursor cursor = db.rawQuery(sql, args);
+        ChatMessage msg = null;
+        while (cursor.moveToNext()) {
+            msg = new ChatMessage();
+            msg.setFrom(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_FROM)));
+            msg.setTo(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_TO)));
+            msg.setBody(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_BODY)));
+            msg.setOwner(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_OWNER)));
+            msg.setTime(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_TIME)));
+            list.add(0, msg);
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
+
+
+    /**
      * 查询最新一条记录
      *
      * @return

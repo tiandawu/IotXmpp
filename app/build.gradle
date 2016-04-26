@@ -28,4 +28,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile files('libs/httpclient-4.1.3.jar')
     compile files('libs/httpcore-4.1.4.jar')
+    compile files('libs/mpandroidchartlibrary-2-2-4.jar')
 }

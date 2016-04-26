@@ -17,6 +17,8 @@ import com.cqupt.xmpp.fragment.DiscoverFragment;
 import com.cqupt.xmpp.fragment.MessageFragment;
 import com.cqupt.xmpp.service.IotXmppService;
 import com.cqupt.xmpp.utils.ActivityUtils;
+import com.cqupt.xmpp.utils.ToastUtils;
+import com.cqupt.xmpp.widght.CircleImageView;
 
 import java.util.ArrayList;
 
@@ -24,8 +26,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
     private ImageView toolbarUserImg, toolbarAddImg, tabMessageImg, tabContactImg, tabDiscoverImg;
-    private LinearLayout tabMessage, tabContact, tabDiscover;
+    private LinearLayout tabMessage, tabContact, tabDiscover, drawerSub, drawerCollect, drawerMsg, drawerSetting, drawerLogOut;
     private TextView toolbarTitle, tabMessageText, tabContactText, tabDiscoverText;
+    private CircleImageView drawerUserImg;
 
     private Fragment messageFragment, contactFragment, discoverFragment;
     private DrawerLayout drawerLayout;
@@ -54,6 +57,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabDiscover = (LinearLayout) findViewById(R.id.tab_discover);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mViewPager = (ViewPager) findViewById(R.id.mainViewPager);
+        drawerUserImg = (CircleImageView) findViewById(R.id.drawer_user_img);
+        drawerSub = (LinearLayout) findViewById(R.id.drawer_item_subscribe);
+        drawerCollect = (LinearLayout) findViewById(R.id.drawer_item_collect);
+        drawerMsg = (LinearLayout) findViewById(R.id.drawer_item_msg);
+        drawerSetting = (LinearLayout) findViewById(R.id.drawer_item_settings);
+        drawerLogOut = (LinearLayout) findViewById(R.id.drawer_item_logOut);
     }
 
     @Override
@@ -101,6 +110,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         toolbarUserImg.setOnClickListener(this);
         toolbarAddImg.setOnClickListener(this);
 
+        drawerUserImg.setOnClickListener(this);
+        drawerLogOut.setOnClickListener(this);
+        drawerSub.setOnClickListener(this);
+        drawerCollect.setOnClickListener(this);
+        drawerMsg.setOnClickListener(this);
+        drawerSetting.setOnClickListener(this);
+
     }
 
     @Override
@@ -126,6 +142,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.toolbar_add_btn:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                ToastUtils.showShortToastInCenter(this, "目前不支持该功能");
+                break;
+            case R.id.drawer_item_subscribe:
+                ActivityUtils.startActivity(this, SubscribedNodeActivity.class);
+                break;
+            case R.id.drawer_item_collect:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                ToastUtils.showShortToastInCenter(this, "目前不支持该功能");
+                break;
+            case R.id.drawer_item_msg:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                ToastUtils.showShortToastInCenter(this, "目前不支持该功能");
+                break;
+            case R.id.drawer_item_settings:
+                ToastUtils.showShortToastInCenter(this, "目前不支持该功能");
+                break;
+            case R.id.drawer_item_logOut:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                IotXmppService.getInstance().stopSelf();
+                ActivityUtils.startActivity(MainActivity.this, LoginActivity.class, true);
+                break;
+            case R.id.drawer_user_img:
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                ToastUtils.showShortToastInCenter(this, "目前不支持该功能");
                 break;
         }
     }
@@ -171,10 +212,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    public void logOut(View view) {
-
-        IotXmppService.getInstance().stopSelf();
-        ActivityUtils.startActivity(MainActivity.this, LoginActivity.class, true);
-
-    }
 }
