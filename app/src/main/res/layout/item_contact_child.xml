@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/item_recycler_view_selector">
+
+        <com.cqupt.xmpp.widght.CircleImageView
+            android:id="@+id/contact_user_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/node_head_img"
+            app:civ_border_color="@color/gray_900"
+            app:civ_border_width="5px" />
+
+        <TextView
+            android:id="@+id/contact_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/contact_user_img"
+            android:lines="1"
+            android:text="username"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/textSize_3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/contact_user_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/contact_user_img"
+            android:layout_alignLeft="@id/contact_user_name"
+            android:text="好友"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_1" />
+
+        <TextView
+            android:id="@+id/contact_user_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="username"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_1" />
+
+        <ImageView
+            android:id="@+id/contact_user_status_img"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/contact_user_status"
+            android:src="@mipmap/online"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

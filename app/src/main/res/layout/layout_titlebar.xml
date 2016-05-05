@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/title_root"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/titlebar_height"
+    android:background="@color/bg_black_darker">
+
+    <LinearLayout
+        android:id="@+id/titlebar_navigation"
+        android:layout_width="@dimen/titlebar_height"
+        android:layout_height="match_parent"
+        android:background="@drawable/press_selector"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/zw_icon_back" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linear_menu_container"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/press_selector"
+        android:gravity="center"
+        android:minWidth="@dimen/titlebar_height"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/icon_more" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/titlebar_separate_line"
+        android:layout_width="fill_parent"
+        android:layout_height="2px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/titlebar_navigation_title"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLength="17"
+        android:paddingRight="10.0dip"
+        android:singleLine="true"
+        android:text="devbird"
+        android:textColor="@color/gray_600"
+        android:textSize="@dimen/textSize_4"
+        android:textStyle="bold" />
+</RelativeLayout>

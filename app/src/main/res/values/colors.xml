@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2b2b2b</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#9E9E9E</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="grey">#8C8C8C</color>
+    <color name="gray_50">#FAFAFA</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#212121</color>
+    <color name="text_color">#E78170</color>
+    <color name="deep_orange_50">#FBE9E7</color>
+    <color name="deep_orange_100">#FFCCBC</color>
+    <color name="deep_orange_400">#FF7043</color>
+    <color name="bg_black">#ff3f3f3f</color>
+    <color name="bg_black_darker">#393939</color>
+    <color name="bg_black_height">#ff262626</color>
+    <color name="bg_black_light">#ff3a3a3a</color>
+    <color name="group_background">#FF282828</color>
+    <color name="transparent_much">#10000000</color>
+    <color name="transparent">#00000000</color>
+</resources>

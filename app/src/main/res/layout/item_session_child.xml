@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/item_recycler_view_selector">
+
+        <com.cqupt.xmpp.widght.CircleImageView
+            android:id="@+id/session_user_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/node_head_img"
+            app:civ_border_color="@color/gray_900"
+            app:civ_border_width="5px" />
+
+        <TextView
+            android:id="@+id/session_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/session_user_img"
+            android:lines="1"
+            android:text="username"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/textSize_3"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/session_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/session_user_img"
+            android:layout_alignLeft="@id/session_user_name"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="好友"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_1" />
+
+        <TextView
+            android:id="@+id/session_user_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="username"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_size_1" />
+
+        <ImageView
+            android:id="@+id/session_user_status_img"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/session_user_status"
+            android:src="@mipmap/online"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

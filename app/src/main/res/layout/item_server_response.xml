@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/chat_item_node_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:text="2016-04-12 20:03:30"
+        android:textColor="@color/gray_600"
+        android:textSize="@dimen/textSize_2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <com.cqupt.xmpp.widght.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/node_head_img"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:civ_border_width="2px"/>
+
+        <TextView
+            android:id="@+id/chat_item_node_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/image_masaage_left_night"
+            android:padding="11dp"
+            android:text="测试文本"
+            android:textColor="@color/gray_600"
+            android:textSize="@dimen/textSize_3"/>
+    </LinearLayout>
+
+</LinearLayout>

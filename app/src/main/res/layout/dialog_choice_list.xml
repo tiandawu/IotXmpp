@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_choice_list_parent_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <com.cqupt.xmpp.widght.RevealView.RelativeRevealView
+        android:id="@+id/dialog_choice_list_revealview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/corner_white_bg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/dialog_choice_photo_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2px"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:alpha="0.2"
+                android:background="@color/black" />
+
+            <TextView
+                android:id="@+id/dialog_choice_photo_cancle"
+                android:layout_width="fill_parent"
+                android:layout_height="49dp"
+                android:background="@drawable/btn_trans_select"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/textSize_3" />
+
+        </LinearLayout>
+    </com.cqupt.xmpp.widght.RevealView.RelativeRevealView>
+</RelativeLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="250dp"
+              android:layout_height="350dp"
+              android:background="@drawable/corner_white_bg"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="可查看折线的节点"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textSize_4"
+        android:textStyle="bold"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/pop_empty_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="没有可查看的节点"
+            android:textColor="@color/gray_800"/>
+
+        <ListView
+            android:id="@+id/pop_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"/>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:alpha="0.2"
+        android:background="@color/colorPrimary"/>
+
+
+    <TextView
+        android:id="@+id/pop_cancle"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+
+
+        android:background="@drawable/corner_white_bg"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/colorPrimary"/>
+
+</LinearLayout>

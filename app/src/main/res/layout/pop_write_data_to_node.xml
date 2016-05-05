@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/corner_white_bg"
+              android:orientation="vertical"
+              android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="写入数据"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textSize_5"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/pop_editText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:hint="请输入写入的值"
+        android:textColorHint="@color/gray_400"
+        android:textSize="@dimen/textSize_3"/>
+
+    <RadioGroup
+        android:id="@+id/pop_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/samplePeriBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="周期"/>
+
+        <RadioButton
+            android:id="@+id/highLimitBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="上限"/>
+
+        <RadioButton
+            android:id="@+id/lowLimitBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="下限"/>
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="5dp"
+        android:alpha="0.3"
+        android:background="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/pop_cancle_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/pop_button_selector"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_5"/>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:alpha="0.3"
+            android:background="@color/colorPrimary"/>
+
+
+        <TextView
+            android:id="@+id/pop_ok_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/pop_button_selector"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_5"/>
+    </LinearLayout>
+
+</LinearLayout>
