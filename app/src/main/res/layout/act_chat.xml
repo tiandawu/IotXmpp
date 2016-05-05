@@ -41,14 +41,14 @@
             android:background="@color/bg_black_darker">
 
 
+
             <EditText
                 android:id="@+id/input_sms"
                 android:layout_width="match_parent"
                 android:layout_height="33dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dip"
-                android:layout_toLeftOf="@+id/send_sms"
+
+
                 android:background="@color/colorPrimary"
                 android:hint="在这里输入内容"
                 android:maxLength="240"

@@ -39,8 +39,13 @@ public class MsgListener implements MessageListener {
     @Override
     public void processMessage(Chat chat, Message message) {
 
+<<<<<<< HEAD
 
         String xmlStr = message.toXML();
+=======
+        String xmlStr = message.toXML();
+
+>>>>>>> origin/master
         String from = message.getFrom();
         String subType = message.getSubType();
 

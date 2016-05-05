@@ -47,6 +47,7 @@ public class MyPacketListener implements PacketListener {
             chatMessage.setTo(getDataResp.getTo());
             chatMessage.setTime(DateUtils.getNowDateTime());
             chatMessage.setOwner(getDataResp.getTo());
+<<<<<<< HEAD
 
             String var = getDataResp.getVar();
             String value = getDataResp.getValue();
@@ -60,6 +61,9 @@ public class MyPacketListener implements PacketListener {
             } else {
                 chatMessage.setBody(value);
             }
+=======
+            chatMessage.setBody(getDataResp.getValue());
+>>>>>>> origin/master
             mChatMsgDao.insert(chatMessage);
 
             Intent intent = new Intent();

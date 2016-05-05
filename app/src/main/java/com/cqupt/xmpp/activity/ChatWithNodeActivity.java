@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,10 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
     }
 
     private void initData() {
+
+        //ttttttttttttttt
+        //ttttttttttttttt
+        //ttttttttttttttt
         groupName = getIntent().getStringExtra(ContactFragment.GROUP_NAME);
         childName = getIntent().getStringExtra(ContactFragment.CHILD_NAME);
         childJid = getIntent().getStringExtra(ContactFragment.CHILD_JID);
@@ -218,6 +223,7 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                     return;
                 }
                 doReadNode();
+
                 break;
             case R.id.setting_node:
                 if (!checkOnline()) {
@@ -374,7 +380,6 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
         packet.setDataType(type);
         manager.getXmppConnection().sendPacket(packet);
     }
-
 
     /**
      * 订阅节点功能

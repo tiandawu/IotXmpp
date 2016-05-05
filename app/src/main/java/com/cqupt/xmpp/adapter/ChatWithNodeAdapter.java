@@ -60,11 +60,15 @@ public class ChatWithNodeAdapter extends BaseAdapter {
         holder = (MyViewHolder) convertView.getTag();
         ChatMessage chatMessage = chatMessages.get(position);
         holder.date.setText(chatMessage.getTime());
+<<<<<<< HEAD
         if (chatMessage.getBody().contains("当前")) {
             holder.content.setText(chatMessage.getBody());
         } else {
             holder.content.setText("测到的值为：" + chatMessage.getBody());
         }
+=======
+        holder.content.setText("测到的值为：" + chatMessage.getBody());
+>>>>>>> origin/master
 
         holder.content.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
