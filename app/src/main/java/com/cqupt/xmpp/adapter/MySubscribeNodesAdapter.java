@@ -50,7 +50,7 @@ public class MySubscribeNodesAdapter extends RecyclerView.Adapter<MySubscribeNod
         String period = nodeSubStatus.getPeriod();
         String highLimit = nodeSubStatus.getHighLimit();
         String lowLimit = nodeSubStatus.getLowLimit();
-        String subSttus = null;
+        String subSttus = "";
         if (!period.equals("false")) {
             subSttus += period;
         }
@@ -75,16 +75,34 @@ public class MySubscribeNodesAdapter extends RecyclerView.Adapter<MySubscribeNod
 
         }
         RosterEntry entry = mRoster.getEntry(nodeName.substring(0, nodeName.lastIndexOf("/")));
-        String type = mRoster.getPresence(entry.getUser()).getType() + "";
+        String type = mRoster.getPresence(entry.getUser()) + "";
         holder.userName.setText(name);
         holder.sessionContent.setText(subSttus);
 
-        if (type.equals("available")) {
+        if (type.equals("available (online)")) {
             holder.userStatus.setText(mContext.getResources().getText(R.string.on_line));
+            holder.nodeSleep.setVisibility(View.GONE);
+            holder.nodeOffline.setVisibility(View.GONE);
+            holder.nodeBusy.setVisibility(View.GONE);
             holder.userStatusImage.setVisibility(View.VISIBLE);
+        } else if (type.equals("available (sleep)")) {
+            holder.userStatus.setText(mContext.getResources().getText(R.string.on_sleep));
+            holder.userStatusImage.setVisibility(View.GONE);
+            holder.nodeBusy.setVisibility(View.GONE);
+            holder.nodeOffline.setVisibility(View.GONE);
+            holder.nodeSleep.setVisibility(View.VISIBLE);
+        } else if (type.equals("available (busy)")) {
+            holder.userStatus.setText(mContext.getResources().getText(R.string.on_busy));
+            holder.userStatusImage.setVisibility(View.GONE);
+            holder.nodeOffline.setVisibility(View.GONE);
+            holder.nodeSleep.setVisibility(View.GONE);
+            holder.nodeBusy.setVisibility(View.VISIBLE);
         } else {
             holder.userStatus.setText(mContext.getResources().getText(R.string.off_line));
             holder.userStatusImage.setVisibility(View.GONE);
+            holder.nodeSleep.setVisibility(View.GONE);
+            holder.nodeBusy.setVisibility(View.GONE);
+            holder.nodeOffline.setVisibility(View.VISIBLE);
         }
 
         if (mListener != null) {
@@ -114,7 +132,7 @@ public class MySubscribeNodesAdapter extends RecyclerView.Adapter<MySubscribeNod
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView userImage;
-        private TextView userName, sessionContent, userStatus;
+        private TextView userName, sessionContent, userStatus, nodeSleep, nodeBusy, nodeOffline;
         private ImageView userStatusImage;
 
         public MyViewHolder(View itemView) {
@@ -124,6 +142,9 @@ public class MySubscribeNodesAdapter extends RecyclerView.Adapter<MySubscribeNod
             userStatus = (TextView) itemView.findViewById(session_user_status);
             userName = (TextView) itemView.findViewById(R.id.session_user_name);
             sessionContent = (TextView) itemView.findViewById(R.id.session_content);
+            nodeSleep = (TextView) itemView.findViewById(R.id.contact_user_status_sleep);
+            nodeBusy = (TextView) itemView.findViewById(R.id.contact_user_status_busy);
+            nodeOffline = (TextView) itemView.findViewById(R.id.contact_user_status_offline);
         }
     }
 

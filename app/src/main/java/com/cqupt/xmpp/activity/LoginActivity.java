@@ -141,7 +141,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 catLoadingView.show(getSupportFragmentManager(), "登录中...");
                 Intent intent = new Intent(this, IotXmppService.class);
                 startService(intent);
-
                 break;
             case R.id.new_user:
                 ToastUtils.showShortToastInCenter(this, "目前不支持注册新用户");

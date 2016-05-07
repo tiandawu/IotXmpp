@@ -95,7 +95,10 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter {
             childViewholder.userName = (TextView) convertView.findViewById(R.id.contact_user_name);
             childViewholder.userStatus = (TextView) convertView.findViewById(R.id.contact_user_status);
             childViewholder.userHeadImg = (ImageView) convertView.findViewById(R.id.contact_user_img);
-            childViewholder.userStatusImg = (ImageView) convertView.findViewById(R.id.contact_user_status_img);
+            childViewholder.userStatusImg = (ImageView) convertView.findViewById(R.id.contact_user_status_online);
+            childViewholder.nodeSleep = (TextView) convertView.findViewById(R.id.contact_user_status_sleep);
+            childViewholder.nodeBusy = (TextView) convertView.findViewById(R.id.contact_user_status_busy);
+            childViewholder.nodeOffline = (TextView) convertView.findViewById(R.id.contact_user_status_offline);
             childViewholder.userGroup = (TextView) convertView.findViewById(R.id.contact_user_group);
             convertView.setTag(childViewholder);
         }
@@ -104,12 +107,30 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter {
         RosterEntry rosterEntry = getRosterEntries(groupPosition).get(childPosition);
         childViewholder.userName.setText(rosterEntry.getName());
         childViewholder.userGroup.setText(getRosterGroup(groupPosition).getName());
-        if ((roster.getPresence(rosterEntry.getUser()).getType() + "").equals("available")) {
+        if ((roster.getPresence(rosterEntry.getUser()) + "").equals("available (online)")) {
             childViewholder.userStatus.setText(context.getResources().getText(R.string.on_line));
+            childViewholder.nodeSleep.setVisibility(View.GONE);
+            childViewholder.nodeOffline.setVisibility(View.GONE);
+            childViewholder.nodeBusy.setVisibility(View.GONE);
             childViewholder.userStatusImg.setVisibility(View.VISIBLE);
+        } else if ((roster.getPresence(rosterEntry.getUser()) + "").equals("available (sleep)")) {
+            childViewholder.userStatus.setText(context.getResources().getText(R.string.on_sleep));
+            childViewholder.userStatusImg.setVisibility(View.GONE);
+            childViewholder.nodeBusy.setVisibility(View.GONE);
+            childViewholder.nodeOffline.setVisibility(View.GONE);
+            childViewholder.nodeSleep.setVisibility(View.VISIBLE);
+        } else if ((roster.getPresence(rosterEntry.getUser()) + "").equals("available (busy)")) {
+            childViewholder.userStatus.setText(context.getResources().getText(R.string.on_busy));
+            childViewholder.userStatusImg.setVisibility(View.GONE);
+            childViewholder.nodeOffline.setVisibility(View.GONE);
+            childViewholder.nodeSleep.setVisibility(View.GONE);
+            childViewholder.nodeBusy.setVisibility(View.VISIBLE);
         } else {
             childViewholder.userStatus.setText(context.getResources().getText(R.string.off_line));
             childViewholder.userStatusImg.setVisibility(View.GONE);
+            childViewholder.nodeSleep.setVisibility(View.GONE);
+            childViewholder.nodeBusy.setVisibility(View.GONE);
+            childViewholder.nodeOffline.setVisibility(View.VISIBLE);
         }
         return convertView;
     }
@@ -127,7 +148,7 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     private class ChildViewHolder {
         ImageView userHeadImg, userStatusImg;
-        TextView userName, userStatus, userGroup;
+        TextView userName, userStatus, userGroup, nodeSleep, nodeBusy, nodeOffline;
     }
 
 
@@ -159,6 +180,8 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter {
      */
     private int getGroupOlineNumber(int groupPosition) {
         int onlineCount = 0;
+
+
         for (RosterEntry rosterEntry : getRosterEntries(groupPosition)) {
             if ((roster.getPresence(rosterEntry.getUser()).getType() + "").equals("available")) {
                 onlineCount++;

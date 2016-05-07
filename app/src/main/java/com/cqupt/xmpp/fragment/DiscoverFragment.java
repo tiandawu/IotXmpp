@@ -79,7 +79,12 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
         ArrayList<Entry> yValues = new ArrayList<Entry>();
 
         for (int i = 0; i < list.size(); i++) {
-            float value = Float.parseFloat(list.get(i).getBody());
+            String valueBody = list.get(i).getBody();
+            if (valueBody.contains("当前")) {
+                continue;
+            }
+
+            float value = Float.parseFloat(valueBody);
             yValues.add(new Entry(value, i));
         }
 

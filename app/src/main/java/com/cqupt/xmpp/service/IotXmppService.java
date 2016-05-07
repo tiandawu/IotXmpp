@@ -57,6 +57,7 @@ public class IotXmppService extends Service {
         mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE); // 通知
         mXmppConnectionManager = XmppConnectionManager.getXmppconnectionManager();
         initXMPPTask();
+
     }
 
     /**
@@ -87,9 +88,7 @@ public class IotXmppService extends Service {
             stopSelf(); // 如果登录失败，自动销毁Service
             return;
         }
-
         mXMPPConnection = mXmppConnectionManager.initConnection(ip, Integer.parseInt(port)); // 初始化XMPPConnection
-
         loginXMPP(); // 登录XMPP
         ChatManager chatmanager = mXMPPConnection.getChatManager();
         chatmanager.addChatListener(new ChatManagerListener() {
@@ -113,7 +112,6 @@ public class IotXmppService extends Service {
                     checkConnectionListener = null;
                 }
             } catch (Exception e) {
-
             }
 
             mXMPPConnection.login(username, password);

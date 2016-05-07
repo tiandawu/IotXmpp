@@ -50,7 +50,7 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
 
 
-
+        <service android:name=".service.IotXmppService"/>
 
     </application>
 

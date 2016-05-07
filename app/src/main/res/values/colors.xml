@@ -27,4 +27,7 @@
     <color name="group_background">#FF282828</color>
     <color name="transparent_much">#10000000</color>
     <color name="transparent">#00000000</color>
+    <color name="node_sleep_shape">#f2ee07</color>
+    <color name="node_sleep_busy">#ac4714</color>
+    <color name="node_sleep_offline">#696968</color>
 </resources>
