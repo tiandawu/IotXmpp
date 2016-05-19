@@ -20,6 +20,7 @@ import com.cqupt.xmpp.adapter.ChatWithNodeAdapter;
 import com.cqupt.xmpp.bean.ChatMessage;
 import com.cqupt.xmpp.bean.NodeSubStatus;
 import com.cqupt.xmpp.db.ChatMsgDao;
+import com.cqupt.xmpp.db.ChatSesionDao;
 import com.cqupt.xmpp.db.NodeStatusDao;
 import com.cqupt.xmpp.fragment.ContactFragment;
 import com.cqupt.xmpp.manager.XmppConnectionManager;
@@ -61,6 +62,7 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
     public static final String WRITE_SUCCESS = "write_success";
     public static final String UNSUBD_SUCCESS = "unsubed_success";
     private NodeStatusDao mNodeStatusDao;
+    private ChatSesionDao mSesionDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
 
     private void initView() {
         chatMsgDao = new ChatMsgDao(this);
+        mSesionDao = new ChatSesionDao(this);
         mNodeStatusDao = new NodeStatusDao(this);
         chatMessages = new ArrayList<>();
         titlebarBackBtn = (LinearLayout) findViewById(R.id.titlebar_navigation);
@@ -249,6 +252,7 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                 if (chatMesgDao.deleteTableData()) {
                     chatMessages.clear();
                     adapter.notifyDataSetChanged();
+                    mSesionDao.deleteSessionByFrom(from);
                     ToastUtils.showShortToastInCenter(ChatWithNodeActivity.this, "操作成功");
                 }
 

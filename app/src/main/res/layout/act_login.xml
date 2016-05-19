@@ -25,6 +25,7 @@
         android:layout_marginTop="20dp">
 
         <EditText
+            android:textColor="@color/gray_800"
             android:id="@+id/login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:textColor="@color/gray_800"
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="200dp"
               android:layout_height="200dp"
-              android:background="@drawable/corner_gray_bg"
+              android:background="@drawable/corner_white1_bg"
               android:gravity="center"
               android:orientation="vertical">
 
@@ -42,7 +42,7 @@
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginTop="15dp"
-        android:background="@color/gray_800"/>
+        android:background="@color/gray_700"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            android:background="@color/gray_800"/>
+            android:background="@color/gray_700"/>
 
         <TextView
             android:id="@+id/tv_ok"

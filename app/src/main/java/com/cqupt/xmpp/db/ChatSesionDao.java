@@ -131,4 +131,16 @@ public class ChatSesionDao {
         return id;
     }
 
+    /**
+     * 根据节点名删除一个会话
+     *
+     * @return
+     */
+    public long deleteSessionByFrom(String nodeName) {
+        SQLiteDatabase db = mDBHelper.getWritableDatabase();
+        long row = db.delete(DBColumns.SESSION_TABLE_NAME, DBColumns.SESSION_FROM + " = ?", new String[]{nodeName});
+        db.close();
+        return row;
+    }
+
 }

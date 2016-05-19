@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:text="@string/clear_msg"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/gray_900"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.cqupt.xmpp.fragment;
 
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,7 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
             list.addAll(mChatMsgDao.queryMsgs(session.getFrom(), session.getTo()));
         }
         LineData mLineData = getLineData(list);
-        showChart(mLineChart, mLineData, getResources().getColor(R.color.gray_800));
+        showChart(mLineChart, mLineData, getResources().getColor(R.color.colorPrimaryDark));
         return view;
     }
 
@@ -163,8 +164,9 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
         View view = View.inflate(getActivity(), R.layout.more_node_lines, null);
         popupWindow.setContentView(view);
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setWidth(DensityUtil.dip2px(getActivity(), 250));
+        popupWindow.setWidth(DensityUtil.dip2px(getActivity(), 220));
         popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
         popupWindow.setFocusable(true);
         final ListView listView = (ListView) view.findViewById(R.id.pop_list_view);
         TextView cancle = (TextView) view.findViewById(R.id.pop_cancle);

@@ -35,8 +35,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private ViewPager mViewPager;
     private ArrayList<Fragment> fragments;
 
-    private static final int MESSAGE_FRAG_ID = 0;
-    private static final int CONTACT_FRAG_ID = 1;
+    private static final int CONTACT_FRAG_ID = 0;
+    private static final int MESSAGE_FRAG_ID = 1;
     private static final int DISCOVER_FRAG_ID = 2;
 
     @Override
@@ -72,8 +72,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         messageFragment = new MessageFragment();
         contactFragment = new ContactFragment();
         discoverFragment = new DiscoverFragment();
-        fragments.add(messageFragment);
         fragments.add(contactFragment);
+        fragments.add(messageFragment);
         fragments.add(discoverFragment);
 
         mViewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments));
@@ -101,11 +101,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
 
         mViewPager.setCurrentItem(0);
-        toolbarTitle.setText(R.string.tab_msg_str);
-        tabMessageImg.setSelected(true);
-        tabMessageText.setTextColor(getResources().getColor(R.color.text_color));
-        tabMessage.setOnClickListener(this);
+        toolbarTitle.setText(R.string.tab_friend_str);
+        tabContactImg.setSelected(true);
+        tabContactText.setTextColor(getResources().getColor(R.color.text_color));
         tabContact.setOnClickListener(this);
+        tabMessage.setOnClickListener(this);
         tabDiscover.setOnClickListener(this);
         toolbarUserImg.setOnClickListener(this);
         toolbarAddImg.setOnClickListener(this);
@@ -178,27 +178,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void resetTabText() {
-        tabMessageText.setTextColor(getResources().getColor(R.color.gray_400));
-        tabContactText.setTextColor(getResources().getColor(R.color.gray_400));
-        tabDiscoverText.setTextColor(getResources().getColor(R.color.gray_400));
+        tabMessageText.setTextColor(getResources().getColor(R.color.gray_600));
+        tabContactText.setTextColor(getResources().getColor(R.color.gray_600));
+        tabDiscoverText.setTextColor(getResources().getColor(R.color.gray_600));
     }
 
     private void setTabImagAndTitle(int id) {
         switch (id) {
-            case MESSAGE_FRAG_ID:
-                resetTabImge();
-                resetTabText();
-                tabMessageImg.setSelected(true);
-                tabMessageText.setTextColor(getResources().getColor(R.color.text_color));
-                toolbarTitle.setText(getResources().getText(R.string.tab_msg_str));
-                mViewPager.setCurrentItem(0);
-                break;
             case CONTACT_FRAG_ID:
                 resetTabImge();
                 resetTabText();
                 tabContactImg.setSelected(true);
                 tabContactText.setTextColor(getResources().getColor(R.color.text_color));
                 toolbarTitle.setText(getResources().getText(R.string.tab_friend_str));
+                mViewPager.setCurrentItem(0);
+                break;
+            case MESSAGE_FRAG_ID:
+                resetTabImge();
+                resetTabText();
+                tabMessageImg.setSelected(true);
+                tabMessageText.setTextColor(getResources().getColor(R.color.text_color));
+                toolbarTitle.setText(getResources().getText(R.string.tab_msg_str));
                 mViewPager.setCurrentItem(1);
                 break;
             case DISCOVER_FRAG_ID:

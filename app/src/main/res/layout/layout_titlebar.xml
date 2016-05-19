@@ -3,11 +3,12 @@
     android:id="@+id/title_root"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/titlebar_height"
-    android:background="@color/bg_black_darker">
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:id="@+id/titlebar_navigation"
         android:layout_width="@dimen/titlebar_height"
+        android:orientation="horizontal"
         android:layout_height="match_parent"
         android:background="@drawable/press_selector"
         android:gravity="center">
@@ -40,9 +41,9 @@
     <View
         android:id="@+id/titlebar_separate_line"
         android:layout_width="fill_parent"
-        android:layout_height="2px"
+        android:layout_height="1px"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/gray_700" />
 
     <TextView
         android:id="@+id/titlebar_navigation_title"

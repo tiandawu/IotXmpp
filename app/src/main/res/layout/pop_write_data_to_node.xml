@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="写入数据"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/textSize_5"
         android:textStyle="bold"/>
 
@@ -23,7 +23,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:hint="请输入写入的值"
-        android:textColorHint="@color/gray_400"
+        android:textColorHint="@color/gray_500"
         android:textSize="@dimen/textSize_3"/>
 
     <RadioGroup
@@ -40,9 +40,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
+            android:textColor="@color/text_color"
             android:text="周期"/>
 
         <RadioButton
+            android:textColor="@color/text_color"
             android:id="@+id/highLimitBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,6 +54,7 @@
             android:text="上限"/>
 
         <RadioButton
+            android:textColor="@color/text_color"
             android:id="@+id/lowLimitBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -66,7 +69,7 @@
         android:layout_height="1px"
         android:layout_marginTop="5dp"
         android:alpha="0.3"
-        android:background="@color/colorPrimary"/>
+        android:background="@color/gray_700"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,14 +86,14 @@
             android:background="@drawable/pop_button_selector"
             android:gravity="center"
             android:text="取消"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/textSize_5"/>
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:alpha="0.3"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/gray_700"/>
 
 
         <TextView
@@ -101,7 +104,7 @@
             android:background="@drawable/pop_button_selector"
             android:gravity="center"
             android:text="确定"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_color"
             android:textSize="@dimen/textSize_5"/>
     </LinearLayout>
 

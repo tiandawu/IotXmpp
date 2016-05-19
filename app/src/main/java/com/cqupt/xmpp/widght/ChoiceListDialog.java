@@ -72,7 +72,7 @@ public class ChoiceListDialog extends Dialog implements View.OnClickListener {
             textView.setText(str);
             textView.setTextSize(14);
             textView.setBackgroundResource(R.drawable.btn_trans_select);
-            textView.setTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+            textView.setTextColor(getContext().getResources().getColor(R.color.gray_900));
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

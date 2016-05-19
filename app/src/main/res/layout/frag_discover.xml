@@ -17,7 +17,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="35dp"
-        android:background="@drawable/look_more_node_selector"
+        android:background="@drawable/white_corner_slector"
         android:gravity="center">
 
         <TextView

@@ -40,7 +40,6 @@ public class MsgListener implements MessageListener {
     public void processMessage(Chat chat, Message message) {
 
 
-
         String xmlStr = message.toXML();
 
         String from = message.getFrom();
