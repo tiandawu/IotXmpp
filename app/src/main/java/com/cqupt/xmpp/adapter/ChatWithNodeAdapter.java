@@ -148,11 +148,19 @@ public class ChatWithNodeAdapter extends BaseAdapter {
                     holder.nodeHeadImg.setImageResource(R.mipmap.node_head_img);
                 } else if ("smoke".equals(groupName)) {
                     holder.nodeHeadImg.setImageResource(R.mipmap.smoke);
-                } else if ("light".equals(groupName)){
+                } else if ("light".equals(groupName)) {
                     holder.nodeHeadImg.setImageResource(R.mipmap.light);
                 }
                 holder.content.setText(chatMessage.getBody());
             } else if ("取消订阅成功".equals(chatMessage.getBody())) {
+
+                if ("temprature".equals(groupName)) {
+                    holder.nodeHeadImg.setImageResource(R.mipmap.node_head_img);
+                } else if ("smoke".equals(groupName)) {
+                    holder.nodeHeadImg.setImageResource(R.mipmap.smoke);
+                } else if ("light".equals(groupName)) {
+                    holder.nodeHeadImg.setImageResource(R.mipmap.light);
+                }
                 holder.content.setText(chatMessage.getBody());
             } else {
 
@@ -167,7 +175,7 @@ public class ChatWithNodeAdapter extends BaseAdapter {
                         holder.content.setText("当前浓度为：" + chatMessage.getBody() + " ppm");
                         holder.nodeHeadImg.setImageResource(R.mipmap.smoke);
                     } else if ("light".equals(groupName)) {
-                        holder.content.setText("当前光照强度为：" + chatMessage.getBody()+" lx");
+                        holder.content.setText("当前光照强度为：" + chatMessage.getBody() + " lx");
                         holder.nodeHeadImg.setImageResource(R.mipmap.light);
                     }
                 } else {

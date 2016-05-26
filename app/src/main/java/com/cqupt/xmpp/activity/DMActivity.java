@@ -27,6 +27,11 @@ import org.jivesoftware.smack.XMPPException;
 /**
  * Created by tiandawu on 2016/5/22.
  */
+
+
+/**
+ * 门磁页面
+ */
 public class DMActivity extends SwipeBackActivity implements View.OnClickListener {
 
 

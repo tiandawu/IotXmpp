@@ -29,6 +29,10 @@ import org.jivesoftware.smack.XMPPException;
 /**
  * Created by tiandawu on 2016/5/22.
  */
+
+/**
+ * 步进电机页面
+ */
 public class BJActivity extends SwipeBackActivity implements View.OnClickListener {
 
     public static final String CHILD_NAME = "childName";

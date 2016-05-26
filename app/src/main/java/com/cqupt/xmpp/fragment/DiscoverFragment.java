@@ -116,9 +116,9 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
         //用y轴的集合来设置参数
         lineDataSet.setLineWidth(1.75f); // 线宽
         lineDataSet.setCircleSize(3f);// 显示的圆形大小
-        lineDataSet.setColor(Color.WHITE);// 显示颜色
-        lineDataSet.setCircleColor(Color.WHITE);// 圆形的颜色
-        lineDataSet.setHighLightColor(Color.WHITE); // 高亮的线的颜色
+        lineDataSet.setColor(Color.BLACK);// 显示颜色
+        lineDataSet.setCircleColor(Color.BLACK);// 圆形的颜色
+        lineDataSet.setHighLightColor(Color.BLACK); // 高亮的线的颜色
 
         List<ILineDataSet> lineDataSets = new ArrayList<>();
         lineDataSets.add(lineDataSet); // add the datasets
@@ -170,7 +170,7 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
         // mLegend.setPosition(LegendPosition.LEFT_OF_CHART);
         mLegend.setForm(Legend.LegendForm.SQUARE);// 样式
         mLegend.setFormSize(6f);// 字体
-        mLegend.setTextColor(Color.WHITE);// 颜色
+        mLegend.setTextColor(Color.BLACK);// 颜色
 //      mLegend.setTypeface(mTf);// 字体
 
         lineChart.animateX(2000); // 立即执行的动画,x轴

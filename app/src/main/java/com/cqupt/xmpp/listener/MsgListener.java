@@ -2,7 +2,6 @@ package com.cqupt.xmpp.listener;
 
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.util.Log;
 
 import com.cqupt.xmpp.activity.ChatWithNodeActivity;
 import com.cqupt.xmpp.activity.DMActivity;
@@ -52,7 +51,7 @@ public class MsgListener implements MessageListener {
         String xmlStr = message.toXML();
 
 
-        Log.e("tt", "tt = " + xmlStr);
+//        Log.e("tt", "tt = " + xmlStr);
 
         String from = message.getFrom();
 
@@ -81,13 +80,13 @@ public class MsgListener implements MessageListener {
             intent.putExtra(LEDActivity.LED_STATE, ledState);
             context.sendBroadcast(intent);
         } else if ("B1@xmpp/B".equals(from)) {
-            Log.e("tt", "doorState = " + message.getBody());
+//            Log.e("tt", "doorState = " + message.getBody());
             Intent intent = new Intent();
             intent.setAction(DMActivity.DOOR_STATE);
             intent.putExtra(DMActivity.DOOR_STATE, message.getBody());
             context.sendBroadcast(intent);
         } else if ("B2@xmpp/B".equals(from)) {
-            Log.e("tt", "gdState = " + message.getBody());
+//            Log.e("tt", "gdState = " + message.getBody());
 
             Intent intent = new Intent();
             intent.setAction(GDActivity.GD_STATE);
@@ -146,7 +145,7 @@ public class MsgListener implements MessageListener {
             } else if ("smoke".equals(groupName)) {
                 session.setBody("当前烟雾浓度为：" + result + " ppm");
             } else if ("light".equals(groupName)) {
-                session.setBody("当前光照强度为：" + result + " ");
+                session.setBody("当前光照强度为：" + result + " lx");
             }
 //            session.setBody(result);
             session.setOwner(message.getTo());
@@ -175,6 +174,10 @@ public class MsgListener implements MessageListener {
             } else if (subType.equals("lowLimit")) {
                 if (mLisener != null) {
                     mLisener.showAlarm(chatMessage.getFrom());
+                }
+
+                if (mSessionListener != null) {
+                    mSessionListener.showSessionAlarm(from);
                 }
                 Intent lAlarmIntent = new Intent(context, PlayAlarmSoundService.class);
                 context.startService(lAlarmIntent);

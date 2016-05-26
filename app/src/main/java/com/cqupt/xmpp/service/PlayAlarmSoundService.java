@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.cqupt.xmpp.R;
 
@@ -58,7 +57,7 @@ public class PlayAlarmSoundService extends Service {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                Log.e("tt", "播放完毕");
+//                Log.e("tt", "播放完毕");
                 if (isLoop) {
                     return;
                 }
@@ -90,7 +89,9 @@ public class PlayAlarmSoundService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mMediaPlayer.start();
+                if (mMediaPlayer != null&&!mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.start();
+                }
             }
         }).start();
 

@@ -98,20 +98,20 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
             holder.userImage.setImageResource(R.mipmap.smoke);
         }
 
-        Log.e("tt", "userName == " + userName);
-        Log.e("tt", "ItemName == " + PreferencesUtils.getSharePreStr(mContext, "clickedItemName"));
+//        Log.e("tt", "userName == " + userName);
+//        Log.e("tt", "ItemName == " + PreferencesUtils.getSharePreStr(mContext, "clickedItemName"));
 
-        if (userName.equals(PreferencesUtils.getSharePreStr(mContext, "clickedItemName"))) {
-
-            Log.e("tt", "??????????????");
+        if (userName.equals(PreferencesUtils.getSharePreStr(mContext, "sessionItemName"))) {
             holder.sessionAlarm.setVisibility(View.GONE);
             PreferencesUtils.putSharePre(mContext, "sessionWhoAlarm", "");
-            PreferencesUtils.putSharePre(mContext, "clickedItemName", "");
+            PreferencesUtils.putSharePre(mContext, "sessionItemName", "");
+            Log.e("tt", "gone alarm");
         }
 
         if (from.equals(PreferencesUtils.getSharePreStr(mContext, "sessionWhoAlarm"))) {
             holder.sessionAlarm.setVisibility(View.VISIBLE);
-//            PreferencesUtils.putSharePre(mContext, "sessionWhoAlarm", "");
+            Log.e("tt", "show alarm");
+            PreferencesUtils.putSharePre(mContext, "sessionWhoAlarm", "");
         }
 
         holder.sessionContent.setText(mChatSessions.get(position).getBody());
@@ -173,7 +173,7 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
 
     @Override
     public void showSessionAlarm(String from) {
-        Log.e("tt", "ttFrom == " + from);
+//        Log.e("tt", "ttFrom == " + from);
         PreferencesUtils.putSharePre(mContext, "sessionWhoAlarm", from);
         Intent intent = new Intent();
         intent.setAction(MessageFragment.RECEIVED_NEW_SESSION);

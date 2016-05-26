@@ -46,7 +46,7 @@ public class MyPacketListener implements PacketListener {
 //            intent.setAction(ContactFragment.FRIENDS_STATUS_CHANGED);
 //            context.sendBroadcast(intent);
 //        }
-
+//        Log.e("tt", "packet == " + packet.toXML());
 
         //获取到数据
         if (packet instanceof GetDataResp) {

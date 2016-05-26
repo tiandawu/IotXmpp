@@ -103,9 +103,17 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
 //        title.setText(childName);
 
         /**
+         * 用于标记好友列表的报警标记
          * 保存被点击的是谁，便于清楚报警标记
          */
         PreferencesUtils.putSharePre(this, "clickedItemName", childName);
+
+
+        /**
+         * 用于标记消息列表的报警标记
+         * 保存被点击的是谁，便于清楚报警标记
+         */
+        PreferencesUtils.putSharePre(this, "sessionItemName", childName);
 
 //        Log.e("tt", "clickedItem = " + childName);
 
@@ -360,19 +368,33 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                         inserMyMessage("设置上限为：" + data + " ppm", "true");
                         inserMySession("设置上限为：" + data + " ppm");
                     }
-                } else {
+                } else if ("temprature".equals(groupName)){
                     if (samplePeriBtn.isChecked()) {
                         packet.setWriteVar("samplePeri");
                         inserMyMessage("设置周期为：" + data + " 秒", "true");
                         inserMySession("设置周期为：" + data + " 秒");
                     } else if (highLimitBtn.isChecked()) {
                         packet.setWriteVar("highLimit");
-                        inserMyMessage("设置上限为：" + data + " ℃", "true");
-                        inserMySession("设置上限为：" + data + " ℃");
+                        inserMyMessage("设置温度上限为：" + data + " ℃", "true");
+                        inserMySession("设置温度上限为：" + data + " ℃");
                     } else if (lowLimitBtn.isChecked()) {
                         packet.setWriteVar("lowLimit");
-                        inserMyMessage("设置下限为：" + data + " ℃", "true");
-                        inserMySession("设置下限为：" + data + " ℃");
+                        inserMyMessage("设置温度下限为：" + data + " ℃", "true");
+                        inserMySession("设置温度下限为：" + data + " ℃");
+                    }
+                } else if ("light".equals(groupName)) {
+                    if (samplePeriBtn.isChecked()) {
+                        packet.setWriteVar("samplePeri");
+                        inserMyMessage("设置周期为：" + data + " 秒", "true");
+                        inserMySession("设置周期为：" + data + " 秒");
+                    } else if (highLimitBtn.isChecked()) {
+                        packet.setWriteVar("highLimit");
+                        inserMyMessage("设置光照强度上限为：" + data + " lx", "true");
+                        inserMySession("设置光照强度上限为：" + data + " lx");
+                    } else if (lowLimitBtn.isChecked()) {
+                        packet.setWriteVar("lowLimit");
+                        inserMyMessage("设置光照强度下限为：" + data + " lx", "true");
+                        inserMySession("设置光照强度下限为：" + data + " lx");
                     }
                 }
 

@@ -2,6 +2,7 @@ package com.cqupt.xmpp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -37,6 +38,12 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter imple
         this.context = context;
         this.mGroups = mGroups;
         roster = xmppConnectionManager.getRoster();
+
+//        /**
+//         * 改变组排序
+//         */
+//
+//        sortGroup(mGroups);
         MsgListener.setAlarmLisener(this);
     }
 
@@ -102,6 +109,9 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter imple
         } else if ("smoke".equals(groupName)) {
             groupViewholder.groupName.setText("烟雾传感器");
         }
+
+//        Log.e("tt", "groupName = " + mGroups.get(groupPosition).getName());
+
         groupViewholder.onlineCount.setText(getGroupOlineNumber(groupPosition) + "/" + getRosterGroup(groupPosition).getEntries().size());
         return convertView;
     }
@@ -140,7 +150,6 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter imple
         }
 
 
-
         /**
          * 如果报警了，显示报警图标，然后清除报警标记
          */
@@ -149,6 +158,8 @@ public class MyExpandableListViewAdapter extends BaseExpandableListAdapter imple
             PreferencesUtils.putSharePre(context, "whoAlarm", "");
         }
 
+
+        Log.e("tt", "childName = " + childName);
 
         if ("temprature1".equals(childName)) {
             childViewholder.userName.setText("温度传感器1");

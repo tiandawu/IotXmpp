@@ -29,6 +29,10 @@ import org.jivesoftware.smack.XMPPException;
 /**
  * Created by tiandawu on 2016/5/22.
  */
+
+/**
+ * 光电接近传感器页面
+ */
 public class GDActivity extends SwipeBackActivity implements View.OnClickListener {
 
 
@@ -62,7 +66,6 @@ public class GDActivity extends SwipeBackActivity implements View.OnClickListene
         bjState = (TextView) findViewById(R.id.bj_state);
         chatManager = connection.getChatManager();
         mChat = chatManager.createChat(TO, null);
-
     }
 
     private void initData() {
@@ -146,12 +149,14 @@ public class GDActivity extends SwipeBackActivity implements View.OnClickListene
         clearAlarmIntent.setAction(ContactFragment.FRIENDS_STATUS_CHANGED);
         sendBroadcast(clearAlarmIntent);
 
+
         unregisterReceiver(mReceiver);
         mReceiver = null;
         connection = null;
         chatManager = null;
         mChat = null;
         PlayAlarmSoundService.isLoop = false;
+        PlayAlarmSoundService.getInstance().stopSelf();
         super.onDestroy();
     }
 }

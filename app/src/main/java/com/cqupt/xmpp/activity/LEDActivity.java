@@ -26,6 +26,11 @@ import org.jivesoftware.smack.XMPPException;
 /**
  * Created by tiandawu on 2016/5/22.
  */
+
+
+/**
+ * LED灯页面
+ */
 public class LEDActivity extends SwipeBackActivity implements View.OnClickListener {
 
 

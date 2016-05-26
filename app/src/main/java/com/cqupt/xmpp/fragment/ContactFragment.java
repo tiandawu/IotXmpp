@@ -74,6 +74,7 @@ public class ContactFragment extends BaseFragment {
     protected void initData() {
         mGroups = xmppConnectionManager.getGroups();
 //        mSwipeRefreshLayout.setRefreshing(false);
+        sortGroup(mGroups);
         myAdapter = new MyExpandableListViewAdapter(getActivity(), mGroups);
         expandableListView.setAdapter(myAdapter);
         if (mGroups.size() == 0) {
@@ -149,6 +150,7 @@ public class ContactFragment extends BaseFragment {
     private void refreshData() {
         mGroups.clear();
         mGroups.addAll(xmppConnectionManager.getGroups());
+        sortGroup(mGroups);
         mSwipeRefreshLayout.setRefreshing(false);
         myAdapter.notifyDataSetChanged();
 //        myAdapter.notifyDataSetInvalidated();
@@ -165,6 +167,7 @@ public class ContactFragment extends BaseFragment {
                 if (FRIENDS_STATUS_CHANGED.equals(action)) {
                     mGroups.clear();
                     mGroups.addAll(xmppConnectionManager.getGroups());
+                    sortGroup(mGroups);
                     myAdapter.notifyDataSetChanged();
                     Log.e("tt", "上线了");
                 }
@@ -180,6 +183,23 @@ public class ContactFragment extends BaseFragment {
         getActivity().unregisterReceiver(receiver);
         receiver = null;
         super.onDestroy();
+    }
+
+
+    /**
+     * 排序分组
+     * @param groups
+     */
+    private void sortGroup(ArrayList<RosterGroup> groups) {
+        for (int i = 0; i < groups.size(); i++) {
+            if (i == 1 || i == 2) {
+                RosterGroup group = groups.get(i + 2);
+                groups.add(i+2,groups.get(i));
+                groups.remove(i+3);
+                groups.add(i,group);
+                groups.remove(i + 1);
+            }
+        }
     }
 }
 
