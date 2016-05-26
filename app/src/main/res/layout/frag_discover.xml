@@ -17,13 +17,13 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="35dp"
-        android:background="@drawable/white_corner_slector"
+        android:background="@drawable/look_more_node_selector"
         android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="查看更多"
+            android:text="查看其它节点"
             android:textColor="@color/text_color"
             android:textSize="@dimen/textSize_5"/>
     </LinearLayout>

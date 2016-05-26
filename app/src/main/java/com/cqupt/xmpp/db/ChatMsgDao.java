@@ -34,6 +34,7 @@ public class ChatMsgDao {
         values.put(DBColumns.MSG_BODY, msg.getBody());
         values.put(DBColumns.MSG_OWNER, msg.getOwner());
         values.put(DBColumns.MSG_TIME, msg.getTime());
+        values.put(DBColumns.MSG_FLAG, msg.getFlag());
         db.insert(DBColumns.MSG_TABLE_NAME, null, values);
         db.close();
         int msgid = queryTheLastMsgId();//返回新插入记录的id
@@ -62,6 +63,7 @@ public class ChatMsgDao {
      * @return
      */
     public ArrayList<ChatMessage> queryMsg(String from, String to, int offset) {
+
         ArrayList<ChatMessage> list = new ArrayList<ChatMessage>();
         SQLiteDatabase db = helper.getWritableDatabase();
         String sql = "select * from " + DBColumns.MSG_TABLE_NAME + " where " + DBColumns.MSG_FROM + "=? and " + DBColumns.MSG_TO + "=? order by _id desc limit ?,?";
@@ -69,12 +71,14 @@ public class ChatMsgDao {
         Cursor cursor = db.rawQuery(sql, args);
         ChatMessage msg = null;
         while (cursor.moveToNext()) {
+
             msg = new ChatMessage();
             msg.setFrom(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_FROM)));
             msg.setTo(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_TO)));
             msg.setBody(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_BODY)));
             msg.setOwner(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_OWNER)));
             msg.setTime(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_TIME)));
+            msg.setFlag(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_FLAG)));
             list.add(0, msg);
         }
         cursor.close();
@@ -102,7 +106,8 @@ public class ChatMsgDao {
             msg.setBody(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_BODY)));
             msg.setOwner(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_OWNER)));
             msg.setTime(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_TIME)));
-            list.add(0, msg);
+            msg.setFlag(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_FLAG)));
+            list.add(msg);
         }
         cursor.close();
         db.close();
@@ -129,6 +134,7 @@ public class ChatMsgDao {
             msg.setBody(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_BODY)));
             msg.setOwner(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_OWNER)));
             msg.setTime(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_TIME)));
+            msg.setFlag(cursor.getString(cursor.getColumnIndex(DBColumns.MSG_FLAG)));
         }
         cursor.close();
         db.close();
@@ -163,6 +169,18 @@ public class ChatMsgDao {
     public long deleteMsgByTime(String time) {
         SQLiteDatabase db = helper.getWritableDatabase();
         long row = db.delete(DBColumns.MSG_TABLE_NAME, DBColumns.MSG_TIME + " = ?", new String[]{time});
+        db.close();
+        return row;
+    }
+
+    /**
+     * 根据收到的消息来自谁，将他发的消息全部删除
+     *
+     * @return
+     */
+    public long deleteMsgByFrom(String from) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        long row = db.delete(DBColumns.MSG_TABLE_NAME, DBColumns.MSG_FROM + " = ?", new String[]{from});
         db.close();
         return row;
     }

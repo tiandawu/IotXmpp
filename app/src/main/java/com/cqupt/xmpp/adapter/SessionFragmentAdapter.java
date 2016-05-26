@@ -1,15 +1,22 @@
 package com.cqupt.xmpp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cqupt.xmpp.R;
 import com.cqupt.xmpp.bean.ChatSession;
+import com.cqupt.xmpp.fragment.MessageFragment;
+import com.cqupt.xmpp.listener.MsgListener;
+import com.cqupt.xmpp.listener.SessionAlarmListener;
 import com.cqupt.xmpp.manager.XmppConnectionManager;
+import com.cqupt.xmpp.utils.PreferencesUtils;
 import com.cqupt.xmpp.widght.CircleImageView;
 
 import org.jivesoftware.smack.Roster;
@@ -22,7 +29,7 @@ import static com.cqupt.xmpp.R.id.session_user_status;
 /**
  * Created by tiandawu on 2016/4/13.
  */
-public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragmentAdapter.MyViewHolder> {
+public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragmentAdapter.MyViewHolder> implements SessionAlarmListener {
 
 
     private Context mContext;
@@ -34,6 +41,7 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
         this.mChatSessions = sessions;
         this.mContext = context;
         mRoster = XmppConnectionManager.getXmppconnectionManager().getRoster();
+        MsgListener.setSessionAlarmListener(this);
     }
 
     @Override
@@ -49,8 +57,64 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
 
         String from = mChatSessions.get(position).getFrom();
         String userName = from.substring(0, from.lastIndexOf("@"));
-        holder.userName.setText(userName);
-        holder.sessionContent.setText("测到的值为：" + mChatSessions.get(position).getBody());
+//        String groupName = from.substring(from.lastIndexOf("/") + 1, from.length());
+//        holder.userName.setText(userName);
+
+        if ("temprature1".equals(userName)) {
+            holder.userName.setText("温度传感器1");
+            holder.userImage.setImageResource(R.mipmap.node_head_img);
+        } else if ("temprature2".equals(userName)) {
+            holder.userName.setText("温度传感器2");
+            holder.userImage.setImageResource(R.mipmap.node_head_img);
+        } else if ("A1".equals(userName)) {
+            holder.userName.setText("风扇");
+            holder.userImage.setImageResource(R.mipmap.node_fan);
+        } else if ("A2".equals(userName)) {
+            holder.userName.setText("直流电机");
+            holder.userImage.setImageResource(R.mipmap.zldj);
+        } else if ("A3".equals(userName)) {
+            holder.userName.setText("LED灯");
+            holder.userImage.setImageResource(R.mipmap.led);
+        } else if ("A4".equals(userName)) {
+            holder.userName.setText("步进电机");
+            holder.userImage.setImageResource(R.mipmap.bjdj);
+        } else if ("B1".equals(userName)) {
+            holder.userName.setText("门磁");
+            holder.userImage.setImageResource(R.mipmap.menci);
+        } else if ("B2".equals(userName)) {
+            holder.userName.setText("光电接近传感器");
+            holder.userImage.setImageResource(R.mipmap.gdcgq);
+        } else if ("light1".equals(userName)) {
+            holder.userName.setText("光照传感器1");
+            holder.userImage.setImageResource(R.mipmap.light);
+        } else if ("light2".equals(userName)) {
+            holder.userName.setText("光照传感器2");
+            holder.userImage.setImageResource(R.mipmap.light);
+        } else if ("smoke1".equals(userName)) {
+            holder.userName.setText("烟雾传感器1");
+            holder.userImage.setImageResource(R.mipmap.smoke);
+        } else if ("smoke2".equals(userName)) {
+            holder.userName.setText("烟雾传感器2");
+            holder.userImage.setImageResource(R.mipmap.smoke);
+        }
+
+        Log.e("tt", "userName == " + userName);
+        Log.e("tt", "ItemName == " + PreferencesUtils.getSharePreStr(mContext, "clickedItemName"));
+
+        if (userName.equals(PreferencesUtils.getSharePreStr(mContext, "clickedItemName"))) {
+
+            Log.e("tt", "??????????????");
+            holder.sessionAlarm.setVisibility(View.GONE);
+            PreferencesUtils.putSharePre(mContext, "sessionWhoAlarm", "");
+            PreferencesUtils.putSharePre(mContext, "clickedItemName", "");
+        }
+
+        if (from.equals(PreferencesUtils.getSharePreStr(mContext, "sessionWhoAlarm"))) {
+            holder.sessionAlarm.setVisibility(View.VISIBLE);
+//            PreferencesUtils.putSharePre(mContext, "sessionWhoAlarm", "");
+        }
+
+        holder.sessionContent.setText(mChatSessions.get(position).getBody());
 
         RosterEntry entry = mRoster.getEntry(from.substring(0, from.lastIndexOf("/")));
         final String type = mRoster.getPresence(entry.getUser()) + "";
@@ -106,11 +170,23 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
         return mChatSessions.size();
     }
 
+
+    @Override
+    public void showSessionAlarm(String from) {
+        Log.e("tt", "ttFrom == " + from);
+        PreferencesUtils.putSharePre(mContext, "sessionWhoAlarm", from);
+        Intent intent = new Intent();
+        intent.setAction(MessageFragment.RECEIVED_NEW_SESSION);
+        mContext.sendBroadcast(intent);
+
+    }
+
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
         private CircleImageView userImage;
         private TextView userName, sessionContent, userStatus, nodeSleep, nodeBusy, nodeOffline;
         private ImageView userStatusImage;
+        private LinearLayout sessionAlarm;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -119,9 +195,10 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
             userStatus = (TextView) itemView.findViewById(session_user_status);
             userName = (TextView) itemView.findViewById(R.id.session_user_name);
             sessionContent = (TextView) itemView.findViewById(R.id.session_content);
-            nodeSleep = (TextView) itemView.findViewById(R.id.contact_user_status_sleep);
-            nodeBusy = (TextView) itemView.findViewById(R.id.contact_user_status_busy);
-            nodeOffline = (TextView) itemView.findViewById(R.id.contact_user_status_offline);
+            nodeSleep = (TextView) itemView.findViewById(R.id.session_user_status_sleep);
+            nodeBusy = (TextView) itemView.findViewById(R.id.session_user_status_busy);
+            nodeOffline = (TextView) itemView.findViewById(R.id.session_user_status_offline);
+            sessionAlarm = (LinearLayout) itemView.findViewById(R.id.session_alarm);
         }
     }
 

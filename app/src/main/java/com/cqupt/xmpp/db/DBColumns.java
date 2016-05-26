@@ -14,6 +14,7 @@ public class DBColumns {
     public static final String MSG_BODY = "msg_body";//消息体
     public static final String MSG_TIME = "msg_time";//消息收发时间
     public static final String MSG_OWNER = "msg_owner";//消息属于谁
+    public static final String MSG_FLAG = "msg_flag";//true表示我发的消息，false表示对方发的消息
 
 
     /**

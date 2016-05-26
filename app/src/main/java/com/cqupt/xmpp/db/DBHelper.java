@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + DBColumns.MSG_TO + TEXT_TYPE + COMMA_SEP
             + DBColumns.MSG_BODY + TEXT_TYPE + COMMA_SEP
             + DBColumns.MSG_OWNER + TEXT_TYPE + COMMA_SEP
+            + DBColumns.MSG_FLAG + TEXT_TYPE + COMMA_SEP
             + DBColumns.MSG_TIME + TEXT_TYPE + ");";
 
     /**

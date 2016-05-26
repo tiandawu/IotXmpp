@@ -4,6 +4,7 @@ import com.cqupt.xmpp.provider.GetDataRespProvider;
 import com.cqupt.xmpp.provider.SubscribRespProvider;
 import com.cqupt.xmpp.provider.UnsubNodeReqProvider;
 import com.cqupt.xmpp.provider.WriteNodeRespProvider;
+import com.cqupt.xmpp.utils.ConstUtil;
 
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManager;
@@ -94,16 +95,22 @@ public class XmppConnectionManager {
      */
     public XMPPConnection getXmppConnection() {
         if (xmppConnection != null) {
-            try {
-                if (!xmppConnection.isConnected()) {
-                    xmppConnection.connect();
-                }
-            } catch (XMPPException e) {
-                e.printStackTrace();
+            if (!xmppConnection.isConnected()) {
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            xmppConnection.connect();
+                        } catch (XMPPException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
             }
             return xmppConnection;
+        } else {
+            return initConnection(ConstUtil.XMPP_IP, Integer.parseInt(ConstUtil.XMPP_PORT));
         }
-        return null;
     }
 
     /**

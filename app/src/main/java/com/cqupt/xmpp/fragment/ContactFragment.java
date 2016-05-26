@@ -5,14 +5,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.cqupt.xmpp.R;
+import com.cqupt.xmpp.activity.BJActivity;
 import com.cqupt.xmpp.activity.ChatActivity;
 import com.cqupt.xmpp.activity.ChatWithNodeActivity;
+import com.cqupt.xmpp.activity.DMActivity;
+import com.cqupt.xmpp.activity.GDActivity;
+import com.cqupt.xmpp.activity.KGNodeActivity;
+import com.cqupt.xmpp.activity.LEDActivity;
 import com.cqupt.xmpp.adapter.MyExpandableListViewAdapter;
 import com.cqupt.xmpp.base.BaseFragment;
 import com.cqupt.xmpp.manager.XmppConnectionManager;
@@ -21,7 +27,6 @@ import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterGroup;
 
 import java.util.ArrayList;
-
 
 
 /**
@@ -81,10 +86,10 @@ public class ContactFragment extends BaseFragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 ArrayList<RosterEntry> rosterEntries = new ArrayList<>(mGroups.get(groupPosition).getEntries());
                 String groupName = mGroups.get(groupPosition).getName();
+                String childName = rosterEntries.get(childPosition).getName();
 
-                if (groupName.equals("people")) {
+                if ("people".equals(groupName)) {
 
-                    String childName = rosterEntries.get(childPosition).getName();
                     String childJid = rosterEntries.get(childPosition).getUser();
                     Intent intent = new Intent(getActivity(), ChatActivity.class);
                     intent.putExtra(ContactFragment.GROUP_NAME, groupName);
@@ -93,9 +98,40 @@ public class ContactFragment extends BaseFragment {
                     getActivity().startActivity(intent);
 
                     return true;
+                } else if ("A".equals(groupName)) {
+                    if ("A1".equals(childName) || "A2".equals(childName)) {
+                        Intent intent = new Intent(getActivity(), KGNodeActivity.class);
+                        intent.putExtra(KGNodeActivity.CHILD_NAME, childName);
+                        startActivity(intent);
+                    } else if ("A3".equals(childName)) {
+                        Intent intent = new Intent(getActivity(), LEDActivity.class);
+                        intent.putExtra(LEDActivity.CHILD_NAME, childName);
+                        startActivity(intent);
+                    } else if ("A4".equals(childName)) {
+
+                        String status = xmppConnectionManager.getRoster().getPresence(childName + "@xmpp/A") + "";
+                        Intent intent = new Intent(getActivity(), BJActivity.class);
+                        intent.putExtra(BJActivity.CHILD_STATUS, status);
+                        intent.putExtra(BJActivity.CHILD_NAME, childName);
+                        startActivity(intent);
+                    }
+
+                    return true;
+                } else if ("B".equals(groupName)) {
+
+                    if ("B1".equals(childName)) {
+                        Intent intent = new Intent(getActivity(), DMActivity.class);
+                        intent.putExtra(DMActivity.CHILD_NAME, childName);
+                        startActivity(intent);
+                    } else if ("B2".equals(childName)) {
+                        Intent intent = new Intent(getActivity(), GDActivity.class);
+                        intent.putExtra(GDActivity.CHILD_NAME, childName);
+                        startActivity(intent);
+                    }
+
+                    return true;
                 }
 
-                String childName = rosterEntries.get(childPosition).getName();
                 String childJid = rosterEntries.get(childPosition).getUser();
                 Intent intent = new Intent(getActivity(), ChatWithNodeActivity.class);
                 intent.putExtra(ContactFragment.GROUP_NAME, groupName);
@@ -125,9 +161,12 @@ public class ContactFragment extends BaseFragment {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(FRIENDS_STATUS_CHANGED)) {
-//                    refreshData();
+                String action = intent.getAction();
+                if (FRIENDS_STATUS_CHANGED.equals(action)) {
+                    mGroups.clear();
+                    mGroups.addAll(xmppConnectionManager.getGroups());
                     myAdapter.notifyDataSetChanged();
+                    Log.e("tt", "上线了");
                 }
             }
         };
@@ -139,7 +178,11 @@ public class ContactFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         getActivity().unregisterReceiver(receiver);
+        receiver = null;
         super.onDestroy();
     }
 }
+
+
+
 

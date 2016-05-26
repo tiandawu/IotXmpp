@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.design.widget.TextInputLayout;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.TextUtils;
@@ -30,18 +29,16 @@ import com.cqupt.xmpp.utils.ConstUtil;
 import com.cqupt.xmpp.utils.PreferencesUtils;
 import com.cqupt.xmpp.utils.ToastUtils;
 import com.cqupt.xmpp.widght.CatLoadingView;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 /**
  * Created by tiandawu on 2016/3/31.
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-    private TextInputLayout inputLayoutUsername;
-    private TextInputLayout inputLayoutPassword;
-    private LinearLayout loginButton, showPassword;
-    private TextView newUser, loginSettings;
-    private EditText inputUsername, inputPassword;
+    private LinearLayout loginButton;
+    private TextView loginSettings;
+    private MaterialEditText inputUsername, inputPassword;
     private ImageView showPasswordImg;
-    private boolean isHiddenPwd = false;
     private CatLoadingView catLoadingView;
     private BroadcastReceiver receiver;
 
@@ -53,23 +50,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         setContentView(R.layout.act_login);
 
-        inputLayoutUsername = ((TextInputLayout) findViewById(R.id.input_layout_username));
-        inputLayoutPassword = ((TextInputLayout) findViewById(R.id.input_layout_password));
-        inputUsername = (EditText) findViewById(R.id.login_username);
-        inputPassword = (EditText) findViewById(R.id.login_password);
+        inputUsername = (MaterialEditText) findViewById(R.id.login_username);
+        inputPassword = (MaterialEditText) findViewById(R.id.login_password);
         loginButton = (LinearLayout) findViewById(R.id.login_button);
-        newUser = (TextView) findViewById(R.id.new_user);
         loginSettings = (TextView) findViewById(R.id.login_setting);
-        showPassword = (LinearLayout) findViewById(R.id.show_password);
         showPasswordImg = (ImageView) findViewById(R.id.show_password_img);
+//        showPasswordImg.setSelected(false);
 
         catLoadingView = new CatLoadingView();
         catLoadingView.setCancelable(false);
 
         loginButton.setOnClickListener(this);
         loginSettings.setOnClickListener(this);
-        showPassword.setOnClickListener(this);
-        newUser.setOnClickListener(this);
+        showPasswordImg.setOnClickListener(this);
         initLonginReceiver();
     }
 
@@ -96,22 +89,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private boolean validatePassword() {
         if (inputPassword.getText().toString().trim().isEmpty()) {
-            inputLayoutPassword.setError(getString(R.string.inputPassword));
             requestFocus(inputPassword);
             return false;
-        } else {
-            inputLayoutPassword.setErrorEnabled(false);
         }
         return true;
     }
 
     private boolean validateName() {
         if (inputUsername.getText().toString().trim().isEmpty()) {
-            inputLayoutUsername.setError(getString(R.string.inputUsername));
             requestFocus(inputUsername);
             return false;
-        } else {
-            inputLayoutUsername.setErrorEnabled(false);
         }
         return true;
     }
@@ -142,27 +129,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 Intent intent = new Intent(this, IotXmppService.class);
                 startService(intent);
                 break;
-            case R.id.new_user:
-                ToastUtils.showShortToastInCenter(this, "目前不支持注册新用户");
-                break;
             case R.id.login_setting:
                 showLoginSettingPop();
                 break;
-            case R.id.show_password:
-                showPassword.setOnClickListener(new View.OnClickListener() {
+            case R.id.show_password_img:
+                showPasswordImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        if (isHiddenPwd) {
-                            //设置EditText文本为可见的
-                            inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        if (showPasswordImg.isSelected()) {
                             showPasswordImg.setSelected(false);
                         } else {
-                            //设置EditText文本为隐藏的
-                            inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                             showPasswordImg.setSelected(true);
                         }
-                        isHiddenPwd = !isHiddenPwd;
+
+                        if (showPasswordImg.isSelected()) {
+                            //设置EditText文本为可见的
+                            inputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        } else {
+                            //设置EditText文本为隐藏的
+                            inputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        }
                         inputPassword.postInvalidate();
 
                         //切换后将EditText光标置于末尾

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_kz_titlebar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="红灯"
+                android:textColor="@color/gray_900"
+                android:textSize="@dimen/textSize_5"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/red_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/red_led_selector"/>
+
+            <TextView
+                android:id="@+id/open_red_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="开"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+
+            <TextView
+                android:id="@+id/close_red_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="关"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="黄灯"
+                android:textColor="@color/gray_900"
+                android:textSize="@dimen/textSize_5"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/yellow_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/yellow_led_selector"/>
+
+            <TextView
+                android:id="@+id/open_yellow_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="开"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+
+            <TextView
+                android:id="@+id/close_yellow_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="关"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="红灯"
+                android:textColor="@color/gray_900"
+                android:textSize="@dimen/textSize_5"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/blue_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/red_led_selector"/>
+
+            <TextView
+                android:id="@+id/open_blue_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="开"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+
+            <TextView
+                android:id="@+id/close_blue_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="关"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="绿灯"
+                android:textColor="@color/gray_900"
+                android:textSize="@dimen/textSize_5"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/green_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/green_led_selector"/>
+
+            <TextView
+                android:id="@+id/open_green_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="开"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+
+            <TextView
+                android:id="@+id/close_green_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/led_button_selector"
+                android:gravity="center"
+                android:text="关"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_4"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

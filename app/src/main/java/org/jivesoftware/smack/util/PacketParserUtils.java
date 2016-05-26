@@ -71,7 +71,9 @@ public class PacketParserUtils {
      * @throws Exception if an exception occurs while parsing the packet.
      */
     public static Packet parseMessage(XmlPullParser parser) throws Exception {
+
         Message message = new Message();
+
         String id = parser.getAttributeValue("", "id");
         message.setPacketID(id == null ? Packet.ID_NOT_AVAILABLE : id);
         message.setTo(parser.getAttributeValue("", "to"));
@@ -96,9 +98,13 @@ public class PacketParserUtils {
         Map<String, Object> properties = null;
         while (!done) {
             int eventType = parser.next();
+
+
             if (eventType == XmlPullParser.START_TAG) {
+
                 String elementName = parser.getName();
                 String namespace = parser.getNamespace();
+
                 if (elementName.equals("subject")) {
                     String xmlLang = getLanguageAttribute(parser);
                     if (xmlLang == null) {
@@ -150,6 +156,7 @@ public class PacketParserUtils {
                             PacketParserUtils.parsePacketExtension(elementName, namespace, parser));
                 }
             } else if (eventType == XmlPullParser.END_TAG) {
+
                 if (parser.getName().equals("message")) {
                     done = true;
                 }

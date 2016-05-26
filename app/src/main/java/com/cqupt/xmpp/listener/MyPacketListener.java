@@ -36,16 +36,30 @@ public class MyPacketListener implements PacketListener {
     public void processPacket(Packet packet) {
 
 
-
         if (packet.getFrom().equals(packet.getTo())) {
             return;
         }
 
+//        if (packet instanceof Presence) {
+//            Log.e("tt", "packet == " + packet.toXML());
+//            Intent intent = new Intent();
+//            intent.setAction(ContactFragment.FRIENDS_STATUS_CHANGED);
+//            context.sendBroadcast(intent);
+//        }
+
+
         //获取到数据
         if (packet instanceof GetDataResp) {
             GetDataResp getDataResp = (GetDataResp) packet;
+
+//            Log.e("tt", "packet = " + packet.toXML());
+
+
+            String from = getDataResp.getFrom();
+            String groupName = from.substring(from.lastIndexOf("/") + 1, from.length());
+
             ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setFrom(getDataResp.getFrom());
+            chatMessage.setFrom(from);
             chatMessage.setTo(getDataResp.getTo());
             chatMessage.setTime(DateUtils.getNowDateTime());
             chatMessage.setOwner(getDataResp.getTo());
@@ -55,11 +69,23 @@ public class MyPacketListener implements PacketListener {
             String value = getDataResp.getValue();
 
             if (var.equals("samplePeri")) {
-                chatMessage.setBody("当前周期为：" + value);
+                chatMessage.setBody("当前周期为：" + value + " 秒");
             } else if (var.equals("highLimit")) {
-                chatMessage.setBody("当前上限为：" + value);
+                if ("temprature".equals(groupName)) {
+                    chatMessage.setBody("当前温度上限值为：" + value + " ℃");
+                } else if ("smoke".equals(groupName)) {
+                    chatMessage.setBody("当前烟雾浓度上限为：" + value + " ppm");
+                } else if ("light".equals(groupName)) {
+                    chatMessage.setBody("当前光照强度上限为：" + value + " lx");
+                }
             } else if (var.equals("lowLimit")) {
-                chatMessage.setBody("当前下限为：" + value);
+
+                if ("temprature".equals(groupName)) {
+                    chatMessage.setBody("当前温度下限值为：" + value + " ℃");
+                } else if ("light".equals(groupName)) {
+                    chatMessage.setBody("当前光照强度下限为：" + value + " lx");
+                }
+
             } else {
                 chatMessage.setBody(value);
             }
@@ -72,9 +98,18 @@ public class MyPacketListener implements PacketListener {
 
 
             ChatSession session = new ChatSession();
-            session.setFrom(getDataResp.getFrom());
+
+            session.setFrom(from);
             session.setTo(getDataResp.getTo());
-            session.setBody(getDataResp.getValue());
+//            session.setBody(getDataResp.getValue());
+
+            if ("temprature".equals(groupName)) {
+                session.setBody("当前温度值为：" + getDataResp.getValue() + " ℃");
+            } else if ("smoke".equals(groupName)) {
+                session.setBody("当前烟雾浓度为：" + getDataResp.getValue() + " ppm");
+            } else if ("light".equals(groupName)) {
+                session.setBody("当前光照强度为：" + value + " lx");
+            }
             session.setOwner(getDataResp.getTo());
             session.setTime(DateUtils.getNowDateTime());
             if (mChatSesionDao.isExistTheSession(getDataResp.getFrom(), getDataResp.getTo())) {

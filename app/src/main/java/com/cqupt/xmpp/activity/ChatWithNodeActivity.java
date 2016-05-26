@@ -18,17 +18,21 @@ import android.widget.TextView;
 import com.cqupt.xmpp.R;
 import com.cqupt.xmpp.adapter.ChatWithNodeAdapter;
 import com.cqupt.xmpp.bean.ChatMessage;
+import com.cqupt.xmpp.bean.ChatSession;
 import com.cqupt.xmpp.bean.NodeSubStatus;
 import com.cqupt.xmpp.db.ChatMsgDao;
 import com.cqupt.xmpp.db.ChatSesionDao;
 import com.cqupt.xmpp.db.NodeStatusDao;
 import com.cqupt.xmpp.fragment.ContactFragment;
+import com.cqupt.xmpp.fragment.MessageFragment;
 import com.cqupt.xmpp.manager.XmppConnectionManager;
 import com.cqupt.xmpp.packet.GetNodeData;
 import com.cqupt.xmpp.packet.SubscribNode;
 import com.cqupt.xmpp.packet.UnsubNode;
 import com.cqupt.xmpp.packet.WriteDataToNode;
 import com.cqupt.xmpp.utils.ConstUtil;
+import com.cqupt.xmpp.utils.DateUtils;
+import com.cqupt.xmpp.utils.PreferencesUtils;
 import com.cqupt.xmpp.utils.ToastUtils;
 import com.cqupt.xmpp.widght.ChoiceListDialog;
 import com.cqupt.xmpp.widght.DropdownListView;
@@ -89,12 +93,36 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
     }
 
     private void initData() {
+
+
         groupName = getIntent().getStringExtra(ContactFragment.GROUP_NAME);
         childName = getIntent().getStringExtra(ContactFragment.CHILD_NAME);
         childJid = getIntent().getStringExtra(ContactFragment.CHILD_JID);
         from = childJid + "/" + groupName;
         owner = ConstUtil.getOwnerJid(this);
-        title.setText(childName);
+//        title.setText(childName);
+
+        /**
+         * 保存被点击的是谁，便于清楚报警标记
+         */
+        PreferencesUtils.putSharePre(this, "clickedItemName", childName);
+
+//        Log.e("tt", "clickedItem = " + childName);
+
+        if ("temprature1".equals(childName)) {
+            title.setText("温度传感器1");
+        } else if ("temprature2".equals(childName)) {
+            title.setText("温度传感器2");
+        } else if ("light1".equals(childName)) {
+            title.setText("光照传感器1");
+        } else if ("light2".equals(childName)) {
+            title.setText("光照传感器2");
+        } else if ("smoke1".equals(childName)) {
+            title.setText("烟雾传感器1");
+        } else if ("smoke2".equals(childName)) {
+            title.setText("烟雾传感器2");
+        }
+
 
         titlebarBackBtn.setOnClickListener(this);
         moreOption.setOnClickListener(this);
@@ -124,8 +152,12 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                 String action = intent.getAction();
                 if (action.equals(RECEIVED_MESSAGE)) {
                     ChatMessage chatMessage = chatMsgDao.queryTheLastMsg();
-                    chatMessages.add(chatMessages.size(), chatMessage);
-                    adapter.notifyDataSetChanged();
+
+                    if (from.equals(chatMessage.getFrom())) {
+                        chatMessages.add(chatMessages.size(), chatMessage);
+                        adapter.notifyDataSetChanged();
+                    }
+
                 } else if (action.equals(SUBSCRIBE_SUCCESS)) {
                     String subType = intent.getStringExtra("subType");
 
@@ -137,9 +169,13 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                         updateNodeStatus(subType);
                     }
 
-                    ToastUtils.showShortToastInCenter(ChatWithNodeActivity.this, "订阅成功");
+//                    ToastUtils.showShortToastInCenter(ChatWithNodeActivity.this, "订阅成功");
+                    inserMyMessage("订阅成功", "false");
+                    inserMySession("订阅成功");
                 } else if (action.equals(WRITE_SUCCESS)) {
-                    ToastUtils.showLongToastInCenter(ChatWithNodeActivity.this, "写入成功");
+//                    ToastUtils.showLongToastInCenter(ChatWithNodeActivity.this, "写入成功");
+                    inserMyMessage("设置成功", "false");
+                    inserMySession("设置成功");
                 } else if (action.equals(UNSUBD_SUCCESS)) {
                     NodeSubStatus nodeSubStatus = mNodeStatusDao.queryOneNodeInfo(from);
                     String subType = intent.getStringExtra("unsubType");
@@ -151,7 +187,9 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                         nodeSubStatus.setLowLimit("false");
                     }
                     if (mNodeStatusDao.updateNodeInfo(nodeSubStatus) > 0) {
-                        ToastUtils.showShortToastInCenter(ChatWithNodeActivity.this, "取消订阅成功");
+//                        ToastUtils.showShortToastInCenter(ChatWithNodeActivity.this, "取消订阅成功");
+                        inserMyMessage("取消订阅成功", "false");
+                        inserMySession("取消订阅成功");
                     }
                 }
 
@@ -249,7 +287,7 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
             @Override
             public void onClick(View v) {
                 ChatMsgDao chatMesgDao = new ChatMsgDao(ChatWithNodeActivity.this);
-                if (chatMesgDao.deleteTableData()) {
+                if (chatMesgDao.deleteMsgByFrom(from) > 0) {
                     chatMessages.clear();
                     adapter.notifyDataSetChanged();
                     mSesionDao.deleteSessionByFrom(from);
@@ -270,7 +308,13 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
 
         final PopupWindow popWindow = new PopupWindow(ChatWithNodeActivity.this);
         View parent = View.inflate(ChatWithNodeActivity.this, R.layout.act_chat_with_node, null);
-        final View view = View.inflate(ChatWithNodeActivity.this, R.layout.pop_write_data_to_node, null);
+        final View view;
+        if ("smoke".equals(groupName)) {
+            view = View.inflate(ChatWithNodeActivity.this, R.layout.pop_write_data_to_smoke_node, null);
+        } else {
+            view = View.inflate(ChatWithNodeActivity.this, R.layout.pop_write_data_to_node, null);
+        }
+
         popWindow.setContentView(view);
         popWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         popWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -301,16 +345,38 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                 packet.setData(data);
                 RadioButton samplePeriBtn = (RadioButton) view.findViewById(R.id.samplePeriBtn);
                 RadioButton highLimitBtn = (RadioButton) view.findViewById(R.id.highLimitBtn);
-                RadioButton lowLimitBtn = (RadioButton) view.findViewById(R.id.lowLimitBtn);
-
-
-                if (samplePeriBtn.isChecked()) {
-                    packet.setWriteVar("samplePeri");
-                } else if (highLimitBtn.isChecked()) {
-                    packet.setWriteVar("highLimit");
-                } else if (lowLimitBtn.isChecked()) {
-                    packet.setWriteVar("lowLimit");
+                RadioButton lowLimitBtn = null;
+                if (!"smoke".equals(groupName)) {
+                    lowLimitBtn = (RadioButton) view.findViewById(R.id.lowLimitBtn);
                 }
+
+                if ("smoke".equals(groupName)) {
+                    if (samplePeriBtn.isChecked()) {
+                        packet.setWriteVar("samplePeri");
+                        inserMyMessage("设置周期为：" + data + " 秒", "true");
+                        inserMySession("设置周期为：" + data + " 秒");
+                    } else if (highLimitBtn.isChecked()) {
+                        packet.setWriteVar("highLimit");
+                        inserMyMessage("设置上限为：" + data + " ppm", "true");
+                        inserMySession("设置上限为：" + data + " ppm");
+                    }
+                } else {
+                    if (samplePeriBtn.isChecked()) {
+                        packet.setWriteVar("samplePeri");
+                        inserMyMessage("设置周期为：" + data + " 秒", "true");
+                        inserMySession("设置周期为：" + data + " 秒");
+                    } else if (highLimitBtn.isChecked()) {
+                        packet.setWriteVar("highLimit");
+                        inserMyMessage("设置上限为：" + data + " ℃", "true");
+                        inserMySession("设置上限为：" + data + " ℃");
+                    } else if (lowLimitBtn.isChecked()) {
+                        packet.setWriteVar("lowLimit");
+                        inserMyMessage("设置下限为：" + data + " ℃", "true");
+                        inserMySession("设置下限为：" + data + " ℃");
+                    }
+                }
+
+
                 manager.getXmppConnection().sendPacket(packet);
                 popWindow.dismiss();
             }
@@ -340,27 +406,90 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
         ArrayList<String> list = new ArrayList<>();
         list.add("读周期");
         list.add("读上限");
-        list.add("读下限");
-        list.add("读测量值");
+
+        if (!"smoke".equals(groupName)) {
+            list.add("读下限");
+        }
+
+        if ("temprature".equals(groupName)) {
+//            list.add("读取湿度");
+            list.add("读取当前温度");
+        } else if ("smoke".equals(groupName)) {
+            list.add("读取烟雾浓度");
+        } else if ("light".equals(groupName)) {
+            list.add("读取光照强度");
+        }
 
         ChoiceListDialog dialog = new ChoiceListDialog(ChatWithNodeActivity.this, list);
         dialog.setOnChoiceListItemClickListener(new ChoiceListDialog.OnChoiceListItemClickListener() {
             @Override
             public void onListItemClick(int index) {
 
-                switch (index) {
-                    case 0:
-                        sendReadPacket("samplePeri");
-                        break;
-                    case 1:
-                        sendReadPacket("highLimit");
-                        break;
-                    case 2:
-                        sendReadPacket("lowLimit");
-                        break;
-                    case 3:
-                        sendReadPacket(groupName);
-                        break;
+                if ("smoke".equals(groupName)) {
+                    switch (index) {
+                        case 0:
+                            sendReadPacket("samplePeri");
+                            inserMyMessage("获取当前订阅周期", "true");
+                            inserMySession("获取当前订阅周期");
+                            break;
+                        case 1:
+                            sendReadPacket("highLimit");
+                            inserMyMessage("获取订阅上限", "true");
+                            inserMySession("获取订阅上限");
+                            break;
+                        case 2:
+                            sendReadPacket(groupName);
+                            inserMyMessage("获取当前烟雾浓度", "true");
+                            inserMySession("获取当前烟雾浓度");
+                            break;
+                    }
+                } else if ("light".equals(groupName)) {
+
+                    switch (index) {
+                        case 0:
+                            sendReadPacket("samplePeri");
+                            inserMyMessage("获取当前订阅周期", "true");
+                            inserMySession("获取当前订阅周期");
+                            break;
+                        case 1:
+                            sendReadPacket("highLimit");
+                            inserMyMessage("获取订阅上限", "true");
+                            inserMySession("获取订阅上限");
+                            break;
+                        case 2:
+                            sendReadPacket("lowLimit");
+                            inserMyMessage("获取订阅下限", "true");
+                            inserMySession("获取订阅下限");
+                            break;
+                        case 3:
+                            sendReadPacket(groupName);
+                            inserMyMessage("获取光照强度", "true");
+                            inserMySession("获取当前温度");
+                            break;
+                    }
+                } else if ("temprature".equals(groupName)) {
+                    switch (index) {
+                        case 0:
+                            sendReadPacket("samplePeri");
+                            inserMyMessage("获取当前订阅周期", "true");
+                            inserMySession("获取当前订阅周期");
+                            break;
+                        case 1:
+                            sendReadPacket("highLimit");
+                            inserMyMessage("获取订阅上限", "true");
+                            inserMySession("获取订阅上限");
+                            break;
+                        case 2:
+                            sendReadPacket("lowLimit");
+                            inserMyMessage("获取订阅下限", "true");
+                            inserMySession("获取订阅下限");
+                            break;
+                        case 3:
+                            sendReadPacket(groupName);
+                            inserMyMessage("获取当前温度", "true");
+                            inserMySession("获取当前温度");
+                            break;
+                    }
                 }
             }
         });
@@ -400,11 +529,14 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
             list.add("取消上限订阅");
         }
 
-        if (nodeSubStatus.getLowLimit().equals("false")) {
-            list.add("下限订阅");
-        } else {
-            list.add("取消下限订阅");
+        if (!"smoke".equals(groupName)) {
+            if (nodeSubStatus.getLowLimit().equals("false")) {
+                list.add("下限订阅");
+            } else {
+                list.add("取消下限订阅");
+            }
         }
+
 
         final ChoiceListDialog dialog = new ChoiceListDialog(this, list);
         dialog.setOnChoiceListItemClickListener(new ChoiceListDialog.OnChoiceListItemClickListener() {
@@ -420,11 +552,17 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                             packetPeriod.setType(IQ.Type.SET);
                             packetPeriod.setFrom(ConstUtil.getOwnerJid(ChatWithNodeActivity.this));
                             manager.getXmppConnection().sendPacket(packetPeriod);
+
+                            inserMyMessage("周期性订阅", "true");
+                            inserMySession("周期性订阅");
                         } else {
                             UnsubNode unsubNodePacket = new UnsubNode(from, groupName, "period");
                             unsubNodePacket.setType(IQ.Type.SET);
                             unsubNodePacket.setFrom(ConstUtil.getOwnerJid(ChatWithNodeActivity.this));
                             manager.getXmppConnection().sendPacket(unsubNodePacket);
+
+                            inserMyMessage("取消周期性订阅", "true");
+                            inserMySession("取消周期性订阅");
                         }
 
                         break;
@@ -437,11 +575,15 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                             packetHightLimit.setType(IQ.Type.SET);
                             packetHightLimit.setFrom(ConstUtil.getOwnerJid(ChatWithNodeActivity.this));
                             manager.getXmppConnection().sendPacket(packetHightLimit);
+                            inserMyMessage("订阅上限警报", "true");
+                            inserMySession("订阅上限警报");
                         } else {
                             UnsubNode unsubNodePacket = new UnsubNode(from, groupName, "highLimit");
                             unsubNodePacket.setType(IQ.Type.SET);
                             unsubNodePacket.setFrom(ConstUtil.getOwnerJid(ChatWithNodeActivity.this));
                             manager.getXmppConnection().sendPacket(unsubNodePacket);
+                            inserMyMessage("取消上限警报", "true");
+                            inserMySession("取消上限警报");
                         }
                         break;
                     /**
@@ -453,11 +595,15 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
                             packetLowLimit.setType(IQ.Type.SET);
                             packetLowLimit.setFrom(ConstUtil.getOwnerJid(ChatWithNodeActivity.this));
                             manager.getXmppConnection().sendPacket(packetLowLimit);
+                            inserMyMessage("订阅下限警报", "true");
+                            inserMySession("订阅下限警报");
                         } else {
                             UnsubNode unsubNodePacket = new UnsubNode(from, groupName, "lowLimit");
                             unsubNodePacket.setType(IQ.Type.SET);
                             unsubNodePacket.setFrom(ConstUtil.getOwnerJid(ChatWithNodeActivity.this));
                             manager.getXmppConnection().sendPacket(unsubNodePacket);
+                            inserMyMessage("取消下限警报", "true");
+                            inserMySession("取消下限警报");
                         }
                         break;
                 }
@@ -486,8 +632,59 @@ public class ChatWithNodeActivity extends SwipeBackActivity implements View.OnCl
 
     @Override
     protected void onPause() {
+
+
+        Intent clearAlarmIntent = new Intent();
+        clearAlarmIntent.setAction(ContactFragment.FRIENDS_STATUS_CHANGED);
+        sendBroadcast(clearAlarmIntent);
+
+        Intent intent = new Intent();
+        intent.setAction(MessageFragment.RECEIVED_NEW_SESSION);
+        sendBroadcast(intent);
+
         unregisterReceiver(receiver);
         super.onPause();
+    }
+
+
+    /**
+     * 插入到消息列表
+     *
+     * @param message
+     * @param flag
+     */
+    private void inserMyMessage(String message, String flag) {
+        ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setBody(message);
+        chatMessage.setFlag(flag);
+        chatMessage.setFrom(from);
+        chatMessage.setOwner(owner);
+        chatMessage.setTo(owner);
+        chatMessage.setTime(DateUtils.getNowDateTime());
+        chatMessages.add(chatMessage);
+        adapter.notifyDataSetChanged();
+        chatMsgDao.insert(chatMessage);
+    }
+
+
+    /**
+     * 插入到会话列表
+     *
+     * @param message
+     */
+    private void inserMySession(String message) {
+        ChatSession chatSession = new ChatSession();
+        chatSession.setBody(message);
+        chatSession.setFrom(from);
+        chatSession.setOwner(owner);
+        chatSession.setTo(owner);
+        chatSession.setTime(DateUtils.getNowDateTime());
+
+        if (mSesionDao.isExistTheSession(from, owner)) {
+            mSesionDao.updateSession(chatSession);
+        } else {
+            mSesionDao.insert(chatSession);
+        }
     }
 
 }

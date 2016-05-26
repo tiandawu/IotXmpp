@@ -27,6 +27,8 @@ public class ChatMessage implements Serializable {
      */
     private String owner;
 
+    private String flag = "false";
+
 
     public String getFrom() {
         return from;
@@ -66,5 +68,13 @@ public class ChatMessage implements Serializable {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

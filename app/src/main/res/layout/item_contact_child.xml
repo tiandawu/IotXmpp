@@ -13,99 +13,134 @@
 
         <com.cqupt.xmpp.widght.CircleImageView
             android:id="@+id/contact_user_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:src="@mipmap/node_head_img"
-            app:civ_border_color="@color/gray_900"
-            app:civ_border_width="5px"/>
+            app:civ_border_color="@color/gray_300"
+            app:civ_border_width="2px"/>
 
         <TextView
             android:id="@+id/contact_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_toRightOf="@id/contact_user_img"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/contact_user_img"
+            android:layout_toRightOf="@+id/contact_user_img"
             android:lines="1"
             android:text="username"
             android:textColor="@color/text_color"
             android:textSize="@dimen/textSize_3"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/contact_user_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/contact_user_img"
-            android:layout_alignLeft="@id/contact_user_name"
-            android:text="好友"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_1"/>
+        <!--<TextView-->
+        <!--android:id="@+id/contact_user_group"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignBottom="@id/contact_user_img"-->
+        <!--android:layout_alignLeft="@id/contact_user_name"-->
+        <!--android:text="好友"-->
+        <!--android:textColor="@color/text_color"-->
+        <!--android:textSize="@dimen/text_size_1"/>-->
 
-        <TextView
-            android:id="@+id/contact_user_status"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="username"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/text_size_1"/>
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/contact_user_status_online"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/contact_user_status"
-            android:src="@mipmap/online"
-            android:visibility="visible"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/contact_user_status_sleep"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/contact_user_status"
-            android:background="@drawable/node_sleep_shape"
-            android:gravity="center"
-            android:text="休"
-            android:textColor="@color/white"
-            android:textSize="6dp"
-            android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/contact_user_status_online"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:src="@mipmap/online"
+                    android:visibility="visible"/>
 
-        <TextView
-            android:id="@+id/contact_user_status_busy"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/contact_user_status"
-            android:background="@drawable/node_busy_shape"
-            android:gravity="center"
-            android:text="忙"
-            android:textColor="@color/white"
-            android:textSize="6dp"
-            android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/contact_user_status_sleep"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/node_sleep_shape"
+                    android:gravity="center"
+                    android:text="休"
+                    android:textColor="@color/white"
+                    android:textSize="6dp"
+                    android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/contact_user_status_offline"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/contact_user_status"
-            android:background="@drawable/node_offline_shape"
-            android:gravity="center"
-            android:text="离"
-            android:textColor="@color/white"
-            android:textSize="6dp"
-            android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/contact_user_status_busy"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/node_busy_shape"
+                    android:gravity="center"
+                    android:text="忙"
+                    android:textColor="@color/white"
+                    android:textSize="6dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/contact_user_status_offline"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/node_offline_shape"
+                    android:gravity="center"
+                    android:text="离"
+                    android:textColor="@color/white"
+                    android:textSize="6dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/contact_user_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="username"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/contact_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:src="@mipmap/arm"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="警报"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/text_size_1"/>
+            </LinearLayout>
+        </LinearLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

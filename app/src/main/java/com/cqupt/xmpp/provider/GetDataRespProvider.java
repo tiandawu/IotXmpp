@@ -24,7 +24,7 @@ public class GetDataRespProvider implements IQProvider {
             int eventType = parser.next();
             if (eventType == XmlPullParser.START_TAG) {
 
-                if (parser.getName().equals("attribute")) {
+                if (parser.getName().equals("attr")) {
                     String var = parser.getAttributeValue("", "var");
                     String value = parser.nextText();
 

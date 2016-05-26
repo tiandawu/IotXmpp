@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="200dp"
               android:layout_height="200dp"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:background="@drawable/corner_white1_bg"
               android:gravity="center"
               android:orientation="vertical">
@@ -16,9 +17,11 @@
         android:textSize="@dimen/textSize_4"
         android:textStyle="bold"/>
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/et_input_ip"
         android:layout_width="150dp"
+        app:met_primaryColor="#80CBC4"
+        app:met_baseColor="@color/gray_900"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="IP地址"
@@ -26,7 +29,9 @@
         android:textColorHint="@color/text_color"
         android:textSize="@dimen/textSize_2"/>
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
+        app:met_primaryColor="#80CBC4"
+        app:met_baseColor="@color/gray_900"
         android:id="@+id/et_inpu_port"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

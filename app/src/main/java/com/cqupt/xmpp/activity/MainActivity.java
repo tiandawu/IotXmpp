@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
-    private ImageView toolbarUserImg, toolbarAddImg, tabMessageImg, tabContactImg, tabDiscoverImg;
+    private ImageView toolbarUserImg, tabMessageImg, tabContactImg, tabDiscoverImg;
     private LinearLayout tabMessage, tabContact, tabDiscover, drawerSub, drawerCollect, drawerMsg, drawerSetting, drawerLogOut;
     private TextView toolbarTitle, tabMessageText, tabContactText, tabDiscoverText;
     private CircleImageView drawerUserImg;
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void initView() {
         setContentView(R.layout.activity_main);
         toolbarUserImg = (ImageView) findViewById(R.id.toobar_user_img);
-        toolbarAddImg = (ImageView) findViewById(R.id.toolbar_add_btn);
+//        toolbarAddImg = (ImageView) findViewById(R.id.toolbar_add_btn);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
 
         tabMessageText = (TextView) findViewById(R.id.tab_message_text);
@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tabMessage.setOnClickListener(this);
         tabDiscover.setOnClickListener(this);
         toolbarUserImg.setOnClickListener(this);
-        toolbarAddImg.setOnClickListener(this);
+//        toolbarAddImg.setOnClickListener(this);
 
         drawerUserImg.setOnClickListener(this);
         drawerLogOut.setOnClickListener(this);
@@ -141,10 +141,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     drawerLayout.openDrawer(Gravity.LEFT);
                 }
                 break;
-            case R.id.toolbar_add_btn:
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                ToastUtils.showShortToastInCenter(this, "目前不支持该功能");
-                break;
+//            case R.id.toolbar_add_btn:
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+//                ToastUtils.showShortToastInCenter(this, "目前不支持该功能");
+//                break;
             case R.id.drawer_item_subscribe:
                 ActivityUtils.startActivity(this, SubscribedNodeActivity.class);
                 break;

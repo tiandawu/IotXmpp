@@ -31,13 +31,14 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/title_size" />
 
-    <ImageView
-        android:background="@color/colorPrimary"
-        android:id="@+id/toolbar_add_btn"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="15dp"
-        android:src="@mipmap/add_friend" />
+    <!--<ImageView-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:id="@+id/toolbar_add_btn"-->
+        <!--android:layout_width="25dp"-->
+        <!--android:layout_height="25dp"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:src="@mipmap/test" />-->
+
 
 </LinearLayout>

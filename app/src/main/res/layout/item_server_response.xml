@@ -23,9 +23,10 @@
         android:padding="10dp">
 
         <com.cqupt.xmpp.widght.CircleImageView
+            android:id="@+id/chat_node_head_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:src="@mipmap/node_head_img"
             app:civ_border_color="@color/colorPrimaryDark"
             app:civ_border_width="2px"/>
@@ -36,11 +37,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="50dp"
             android:background="@drawable/image_masaage_left"
             android:padding="11dp"
             android:text="测试文本"
             android:textColor="@color/gray_600"
             android:textSize="@dimen/textSize_3"/>
     </LinearLayout>
+
 
 </LinearLayout>

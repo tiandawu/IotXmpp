@@ -54,10 +54,28 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
         mSessions = mSesionDao.queryMsg();
         if (mSessions.size() > 0) {
             ChatSession session = mSessions.get(mSessions.size() - 1);
-            list.addAll(mChatMsgDao.queryMsgs(session.getFrom(), session.getTo()));
+
+//            ArrayList<ChatMessage> result = mChatMsgDao.queryMsgs(session.getFrom(), session.getTo());
+//            for (ChatMessage chatMessage : result) {
+//
+//
+//                if ("true".equals(chatMessage.getFlag())) {
+//                    continue;
+//                }
+//                if ("设置成功".equals(chatMessage.getBody())||"订阅成功".equals(chatMessage.getBody()) || "取消订阅成功".equals(chatMessage.getBody())) {
+//                    continue;
+//                }
+//
+//                Log.e("tt", chatMessage.getBody());
+//                list.add(chatMessage);
+//            }
+
+            getData(session);
+
+//            list.addAll(mChatMsgDao.queryMsgs(session.getFrom(), session.getTo()));
         }
         LineData mLineData = getLineData(list);
-        showChart(mLineChart, mLineData, getResources().getColor(R.color.colorPrimaryDark));
+        showChart(mLineChart, mLineData, getResources().getColor(R.color.gray_100));
         return view;
     }
 
@@ -123,7 +141,7 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
 
         // enable / disable grid background
         lineChart.setDrawGridBackground(false); // 是否显示表格颜色
-        lineChart.setGridBackgroundColor(Color.WHITE & 0x70FFFFFF); // 表格的的颜色，在这里是是给颜色设置一个透明度
+        lineChart.setGridBackgroundColor(Color.BLACK & 0x70FFFFFF); // 表格的的颜色，在这里是是给颜色设置一个透明度
 //        lineChart.setGridBackgroundColor(getResources().getColor(R.color.gray_800));
         // enable touch gestures
         lineChart.setTouchEnabled(true); // 设置是否可以触摸
@@ -178,7 +196,34 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
         for (ChatSession session : mSessions) {
             String from = session.getFrom();
             String name = from.substring(0, from.lastIndexOf("@"));
-            datas.add(name);
+
+            if ("temprature1".equals(name)) {
+                datas.add("温度传感器1");
+            } else if ("temprature2".equals(name)) {
+                datas.add("温度传感器2");
+            } else if ("A1".equals(name)) {
+                datas.add("风扇");
+            } else if ("A2".equals(name)) {
+                datas.add("直流电机");
+            } else if ("A3".equals(name)) {
+                datas.add("LED灯");
+            } else if ("A4".equals(name)) {
+                datas.add("步进电机");
+            } else if ("B1".equals(name)) {
+                datas.add("门磁");
+            } else if ("B2".equals(name)) {
+                datas.add("光电接近传感器");
+            } else if ("light1".equals(name)) {
+                datas.add("光照传感器1");
+            } else if ("light2".equals(name)) {
+                datas.add("光照传感器2");
+            } else if ("smoke1".equals(name)) {
+                datas.add("烟雾传感器1");
+            } else if ("smoke2".equals(name)) {
+                datas.add("烟雾传感器2");
+            }
+
+//            datas.add(name);
         }
         listView.setEmptyView(emptyShow);
         listView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, datas));
@@ -197,8 +242,8 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
                 ChatSession session = mSessions.get(position);
                 String from = session.getFrom();
                 String to = session.getTo();
-                list.addAll(mChatMsgDao.queryMsgs(from, to));
-
+//                list.addAll(mChatMsgDao.queryMsgs(from, to));
+                getData(session);
                 LineData data = getLineData(list);
                 mLineChart.setData(data);
                 mLineChart.notifyDataSetChanged();
@@ -206,6 +251,23 @@ public class DiscoverFragment extends BaseFragment implements View.OnClickListen
                 mLineChart.invalidate();
             }
         });
+    }
+
+
+    private void getData(ChatSession session) {
+        ArrayList<ChatMessage> result = mChatMsgDao.queryMsgs(session.getFrom(), session.getTo());
+        for (ChatMessage chatMessage : result) {
+
+
+            if ("true".equals(chatMessage.getFlag())) {
+                continue;
+            }
+            if ("设置成功".equals(chatMessage.getBody()) || "订阅成功".equals(chatMessage.getBody()) || "取消订阅成功".equals(chatMessage.getBody())) {
+                continue;
+            }
+
+            list.add(chatMessage);
+        }
     }
 
 }
