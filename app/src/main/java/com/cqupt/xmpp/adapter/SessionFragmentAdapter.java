@@ -116,7 +116,9 @@ public class SessionFragmentAdapter extends RecyclerView.Adapter<SessionFragment
 
         holder.sessionContent.setText(mChatSessions.get(position).getBody());
 
+        Log.e("tt", "from = " + from);
         RosterEntry entry = mRoster.getEntry(from.substring(0, from.lastIndexOf("/")));
+        Log.e("tt", "entry = " + entry);
         final String type = mRoster.getPresence(entry.getUser()) + "";
 
         if (type.equals("available (online)")) {

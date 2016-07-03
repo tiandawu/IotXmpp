@@ -74,7 +74,7 @@ public class ContactFragment extends BaseFragment {
     protected void initData() {
         mGroups = xmppConnectionManager.getGroups();
 //        mSwipeRefreshLayout.setRefreshing(false);
-        sortGroup(mGroups);
+//        sortGroup(mGroups);
         myAdapter = new MyExpandableListViewAdapter(getActivity(), mGroups);
         expandableListView.setAdapter(myAdapter);
         if (mGroups.size() == 0) {
@@ -150,7 +150,7 @@ public class ContactFragment extends BaseFragment {
     private void refreshData() {
         mGroups.clear();
         mGroups.addAll(xmppConnectionManager.getGroups());
-        sortGroup(mGroups);
+//        sortGroup(mGroups);
         mSwipeRefreshLayout.setRefreshing(false);
         myAdapter.notifyDataSetChanged();
 //        myAdapter.notifyDataSetInvalidated();
@@ -167,7 +167,7 @@ public class ContactFragment extends BaseFragment {
                 if (FRIENDS_STATUS_CHANGED.equals(action)) {
                     mGroups.clear();
                     mGroups.addAll(xmppConnectionManager.getGroups());
-                    sortGroup(mGroups);
+//                    sortGroup(mGroups);
                     myAdapter.notifyDataSetChanged();
                     Log.e("tt", "上线了");
                 }

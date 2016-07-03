@@ -93,8 +93,8 @@ public class IotXmppService extends Service {
         ChatManager chatmanager = mXMPPConnection.getChatManager();
         chatmanager.addChatListener(new ChatManagerListener() {
             @Override
-            public void chatCreated(Chat arg0, boolean arg1) {
-                arg0.addMessageListener(new MsgListener(IotXmppService.this, mNotificationManager));
+            public void chatCreated(Chat chat, boolean createdLocally) {
+                chat.addMessageListener(new MsgListener(IotXmppService.this, mNotificationManager));
             }
         });
     }
@@ -123,7 +123,6 @@ public class IotXmppService extends Service {
                 // 注册好友状态更新监听
                 mMyPacketListener = new MyPacketListener(this);
                 mXMPPConnection.addPacketListener(mMyPacketListener, null);
-
             } else {
                 sendLoginBroadcast(false);
                 stopSelf(); // 如果登录失败，自动销毁Service
